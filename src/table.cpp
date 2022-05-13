@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Table::Table(Div* p_div, int p_rows, int p_cols, string p_headers, string p_widths = "none") : Element(p_div, p_rows, p_cols)
+Table::Table(Div* p_div, int p_rows, int p_cols, string p_headers, string p_widths) : Element(p_div, p_rows, p_cols)
 {
 	m_headers		= p_headers;
 	m_selectedRow	= 1;
@@ -51,7 +51,7 @@ void Table::populateCellMatrix(string data)
 	}
 }
 
-void Table::drawHeaderRow(bool filterOn = false)
+void Table::drawHeaderRow(bool filterOn)
 {
 	int lastPosition = 1;
 	for(int i = 0; i < m_cellMatrix[0].size(); i++)
