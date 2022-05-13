@@ -16,7 +16,7 @@ class Text
 		Div*			m_div;
 
 	public:
-		Text(Div* p_div, std::string p_text, int p_y, int p_x);
+		Text(Div* p_div, std::string p_text, int p_y, int p_x, int p_width = 0);
 
 		void Draw();
 
