@@ -14,12 +14,12 @@ class Element;
 class Table : public Element
 {
 	private:
-		int						m_selectedRows;
-		int						m_dataRows;
-		std::string					m_headers;
-		std::string					m_query;
-		std::vector<int>				m_widths;
-		std::vector<std::vector<Cell*>>	m_cellMatrix;
+		int									m_selectedRow;
+		int									m_dataRows;
+		std::string							m_headers;
+		std::string							m_query;
+		std::vector<int>					m_widths;
+		std::vector<std::vector<Cell*>>		m_cellMatrix;
 
 		void draw();
 
