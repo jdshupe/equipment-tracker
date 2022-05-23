@@ -9,7 +9,7 @@ class Selection : public Element
 	private:
 
 	public:
-		Selection(Div* p_div, int p_rows, int p_cols);
+		Selection(Div* div, int height, int width, int yPos, int xPos);
 };
 
 #endif

@@ -1,10 +1,10 @@
 // element.cpp
 #include "element.h"
 
-Element::Element(Div* p_div, int p_rows, int p_cols)
+Element::Element(Div* div, int height, int width, int yPos, int xPos)
 {
-	m_div		= p_div;
-	m_rows		= p_rows;
-	m_cols		= p_cols;
+	m_div		= div;
+	m_height	= height;
+	m_width		= width;
 };
 

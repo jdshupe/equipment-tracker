@@ -10,19 +10,20 @@ class Element
 {
 	protected:
 		Div*			m_div;
-		int				m_rows, m_cols;
+		int				m_width, m_height;
+		int				m_xPos, m_yPos;
 
 	public:
-		Element(Div* p_div, int p_rows, int p_cols);
+		Element(Div* div, int height, int width, int yPos, int xPos);
 
-		int rows() { return m_cols; }
-		void rows(int p_rows) { m_rows = p_rows; }
+		int height() { return m_height; }
+		void height(int height) { m_height = height; }
 
-		int cols() { return m_cols; }
-		void cols(int p_cols) { m_cols = p_cols; }
+		int width() { return m_width; }
+		void width(int width) { m_width = width; }
 
 		Div* div() const { return m_div; }
-		void div(Div* p_div) { m_div = p_div; }
+		void div(Div* div) { m_div = div; }
 };
 
 #endif

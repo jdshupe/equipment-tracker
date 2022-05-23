@@ -3,15 +3,21 @@
 
 using namespace std;
 
-Table::Table(Div* p_div, int p_rows, int p_cols, string p_headers, string p_widths) : Element(p_div, p_rows, p_cols)
+Table::Table(Div* div, int height, int width, int yPos, int xPos, string headers, string widths) 
+: Element(div, height, width, yPos, xPos)
 {
-	m_headers		= p_headers;
+	m_headers		= headers;
 	m_selectedRow	= 1;
 
-	m_cellMatrix.resize(p_rows);
-	for (size_t i = 0; i < p_rows; i++) m_cellMatrix[i].resize(p_cols);
+	createColumnWidths(widths);
 
-	createColumnWidths(p_widths);
+	/**TODO[refactor] the number of rows in the cell matrix should be based of off the data returned
+	 * not the height of the div. This will enable row scrolling instead of having to requery data
+	 * every time the page is scrolled.
+	 */
+	m_cellMatrix.resize(height);
+	for (size_t i = 0; i < height; i++) m_cellMatrix[i].resize(m_widths.length());
+
 	createHeaderCells();
 }
 
@@ -25,7 +31,7 @@ void Table::createHeaderCells()
 {
 	string temp_header = m_headers;
 
-	for(int i = 0; i < m_cols; i++) // for loop to create cells
+	for(int i = 0; i < m_headers.length(); i++) // for loop to create cells
 	{
 		m_cellMatrix[0][i] = new Cell(temp_header.substr(0, temp_header.find(",")));
 		temp_header.erase(0, temp_header.find(",") + 1); // remove value from string
@@ -41,9 +47,9 @@ void Table::populateCellMatrix(string data)
 {
 	// TODO need to clear the matrix prior to loading in data.
 	// This will be similar to initializing it
-	for (int y = 1; y < m_rows; y++)
+	for (int y = 1; y < m_height; y++)
 	{
-		for (int x = 0; x < m_cols; x++)
+		for (int x = 0; x < m_height; x++)
 		{
 			m_cellMatrix[y][x] = new Cell(data.substr(0, data.find(",")));
 			data.erase(0, data.find(",") + 1);
@@ -92,17 +98,18 @@ void Table::drawBodyRows()
 	wrefresh(m_div->win());
 }
 
-void Table::createColumnWidths(string _widths)
+void Table::createColumnWidths(string widths)
 {
-	if(_widths == "none")
+	int numberOfColumns = count(m_headers.begin(), m_headers.end(), ',')
+	if(widths == "none")
 	{
-		for(int i = 0; i < m_cols; i++)
+		for(int i = 0; i < numberOfColumns; i++)
 		{
-			m_widths.push_back((COLS-1)/m_cols);
+			m_widths.push_back((COLS-1)/numberOfColumns);
 		}
 	} else 
 	{
-		for(int i = 0; i < m_cols; i++)
+		for(int i = 0; i < numberOfColumns; i++)
 		{
 			m_widths.push_back(stoi(_widths.substr(0, _widths.find(","))));
 			_widths.erase(0, _widths.find(",") + 1);

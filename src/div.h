@@ -24,17 +24,17 @@ class Div
 
 
 	public:
-		Div(std::string p_name, int p_y, int p_x, int p_height, int p_width);
+		Div(std::string name, int yPos, int xPos, int height, int width);
 
 		void render();
 
 		void destroy_win();
 
 		int height() { return m_height; };
-		void height(int p_height) { m_height = p_height; };
+		void height(int height) { m_height = height; };
 
 		int width() { return m_width; };
-		void width(int p_width) {m_width = p_width; };
+		void width(int width) {m_width = width; };
 
 		WINDOW* win() { return m_window; };
 };

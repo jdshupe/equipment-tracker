@@ -3,13 +3,13 @@
 
 using namespace std;
 
-Div::Div(string p_name, int p_y, int p_x, int p_height, int p_width)
+Div::Div(string name, int yPos, int xPos, int height, int width)
 {
-	m_name			= p_name;
-	m_xPos			= p_x;
-	m_yPos			= p_y;
-	m_height		= p_height;
-	m_width			= p_width;
+	m_name			= name;
+	m_yPos			= yPos;
+	m_xPos			= xPos;
+	m_height		= height;
+	m_width			= width;
 
 	m_window		= Div::createWindow();
 
