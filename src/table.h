@@ -9,7 +9,9 @@
 #include <iostream>
 #include <vector>
 #include "element.h"
+#include <algorithm>
 
+class Cell;
 class Element;
 class Table : public Element
 {

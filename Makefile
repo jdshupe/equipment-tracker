@@ -5,7 +5,7 @@ obj = $(src:.cpp=.o)
 LDFLAGS = -lncurses -lpqxx
 
 equipmentTracker: $(obj)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -g -o $@ $^ $(LDFLAGS)
 
 .PHONY: clean
 clean:

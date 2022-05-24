@@ -16,7 +16,7 @@ Table::Table(Div* div, int height, int width, int yPos, int xPos, string headers
 	 * every time the page is scrolled.
 	 */
 	m_cellMatrix.resize(height);
-	for (size_t i = 0; i < height; i++) m_cellMatrix[i].resize(m_widths.length());
+	for (size_t i = 0; i < height; i++) m_cellMatrix[i].resize(m_widths.size());
 
 	createHeaderCells();
 }
@@ -100,7 +100,7 @@ void Table::drawBodyRows()
 
 void Table::createColumnWidths(string widths)
 {
-	int numberOfColumns = count(m_headers.begin(), m_headers.end(), ',')
+	int numberOfColumns = count(m_headers.begin(), m_headers.end(), ',');
 	if(widths == "none")
 	{
 		for(int i = 0; i < numberOfColumns; i++)
@@ -111,8 +111,8 @@ void Table::createColumnWidths(string widths)
 	{
 		for(int i = 0; i < numberOfColumns; i++)
 		{
-			m_widths.push_back(stoi(_widths.substr(0, _widths.find(","))));
-			_widths.erase(0, _widths.find(",") + 1);
+			m_widths.push_back(stoi(widths.substr(0, widths.find(","))));
+			widths.erase(0, widths.find(",") + 1);
 		}
 	}
 }
