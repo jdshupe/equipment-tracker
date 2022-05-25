@@ -9,7 +9,7 @@
 class Element;
 class Div
 {
-	private:
+	protected:
 		std::string				m_name;
 		int						m_xPos;
 		int						m_yPos;
@@ -24,6 +24,7 @@ class Div
 
 
 	public:
+		//TODO(feature) add constructor that centers the div
 		Div(std::string name, int yPos, int xPos, int height, int width);
 
 		void render();

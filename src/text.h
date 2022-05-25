@@ -6,6 +6,7 @@
 #include <string>
 #include "div.h"
 
+//TODO(refactor) add element as base class
 class Text
 {
 	private:

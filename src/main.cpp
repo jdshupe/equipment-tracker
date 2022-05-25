@@ -1,6 +1,7 @@
 /* include statements */
 #include <curses.h>
 #include "div.h"
+#include "divs/newRental.h"
 #include "text.h"
 #include "table.h"
 #include <string>
@@ -72,12 +73,14 @@ int main()
 					header_table.render();
 					break;
 				case 'N':
-					createNewRental();
-					activeWindow = &header_win;
-					header_win.render();
-					header_table.render();
-					header_table.refreshData();
-					footer_win.render();
+					NewRental rentalWindow("New Rental", 3, 3, LINES - 6, COLS - 6);
+					activeWindow = &rentalWindow;
+					//createNewRental();
+					//activeWindow = &header_win;
+					//header_win.render();
+					//header_table.render();
+					//header_table.refreshData();
+					//footer_win.render();
 					break;
 			}
 		} else {
