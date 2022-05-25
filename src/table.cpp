@@ -31,7 +31,7 @@ void Table::createHeaderCells()
 {
 	string temp_header = m_headers;
 
-	for(int i = 0; i < m_headers.length(); i++) // for loop to create cells
+	for(int i = 0; i < count(m_headers.begin(), m_headers.end(), ',') + 1; i++) // for loop to create cells
 	{
 		m_cellMatrix[0][i] = new Cell(temp_header.substr(0, temp_header.find(",")));
 		temp_header.erase(0, temp_header.find(",") + 1); // remove value from string
@@ -49,7 +49,7 @@ void Table::populateCellMatrix(string data)
 	// This will be similar to initializing it
 	for (int y = 1; y < m_height; y++)
 	{
-		for (int x = 0; x < m_height; x++)
+		for (int x = 0; x < m_widths.size(); x++)
 		{
 			m_cellMatrix[y][x] = new Cell(data.substr(0, data.find(",")));
 			data.erase(0, data.find(",") + 1);
@@ -100,7 +100,9 @@ void Table::drawBodyRows()
 
 void Table::createColumnWidths(string widths)
 {
-	int numberOfColumns = count(m_headers.begin(), m_headers.end(), ',');
+	int numberOfColumns = count(m_headers.begin(), m_headers.end(), ',') + 1; /** number of columns is the number 
+																				of ',' in the string plus one to
+																				catch the last value */
 	if(widths == "none")
 	{
 		for(int i = 0; i < numberOfColumns; i++)

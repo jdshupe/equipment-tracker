@@ -31,10 +31,10 @@ int main()
 	Text key_bind_3(&footer_win, "F:Filter", 1, key_bind_2.lastCol() + 2);
 	Text key_bind_4(&footer_win, "E:Extend", 1, key_bind_3.lastCol() + 2);
 
-	string headers = "PO Number,Description,Price,Start Date,End Date";
+	string headers = "PO Number,Description,Price,Start Date,End Date ";
 	string widths = "14,50,10,11,11";
 
-	Table header_table(&header_win, LINES-6, 5, 1, 1,  headers, widths);
+	Table header_table(&header_win, LINES-6, COLS-2, 1, 1,  headers, widths);
 	header_table.query("\
 			SELECT \
 				o.number as \"PO Number\",\
