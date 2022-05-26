@@ -3,6 +3,7 @@
 #define NEWRENTAL_H
 #include "../div.h"
 #include "../text.h"
+#include "../connection.h"
 
 class Div;
 class NewRental : public Div
