@@ -4,6 +4,7 @@
 #include "../div.h"
 #include "../text.h"
 #include "../connection.h"
+#include "../selection.h"
 
 class Div;
 class NewRental : public Div

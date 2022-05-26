@@ -52,14 +52,12 @@ void NewRental::addElements()
 					"(SELECT id FROM purchase_order WHERE number = '") + s_poNumber + std::string("'),"
 					"(SELECT id FROM equipment WHERE code = '");
 
-
-	mvwgetstr(this->win(), 8, 2, s_description);
-	mvwgetstr(this->win(), 8, 50, s_code);
-	mvwgetstr(this->win(), 8, 65, s_cost);
+	Selection descriptionSel(this, 1, 20, 8, 2);
+	descriptionSel.makeSelection();
 
 	noecho();
 	curs_set(0);
-	database::insert(sqlNewPO);
+	//database::insert(sqlNewPO);
 	this->destroy_win();
 	clear();
 	refresh();
