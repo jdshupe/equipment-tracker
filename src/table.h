@@ -9,7 +9,9 @@
 #include <iostream>
 #include <vector>
 #include "element.h"
+#include <algorithm>
 
+class Cell;
 class Element;
 class Table : public Element
 {
@@ -31,10 +33,10 @@ class Table : public Element
 
 		void drawBodyRows();
 
-		void createColumnWidths(std::string p_value);
+		void createColumnWidths(std::string value);
 
 	public:
-		Table(Div* p_div, int p_rows, int p_cols, std::string p_headers, std::string p_widths = "none");
+		Table(Div* div, int height, int width, int yPos, int xPos, std::string headers, std::string widths = "none");
 
 		void render();
 
@@ -44,7 +46,7 @@ class Table : public Element
 		void rowUp();
 
 		const std::string& query() const { return m_query; }
-		void query(const std::string p_query) { m_query = p_query; }
+		void query(const std::string query) { m_query = query; }
 };
 
 #endif

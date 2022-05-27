@@ -3,13 +3,19 @@
 #define SELECTION_H
 
 #include "element.h"
+#include <vector>
+#include <string>
 
 class Selection : public Element
 {
 	private:
+		std::vector<std::vector<std::string>>		m_dataList;
+		std::string									m_value;
 
 	public:
-		Selection(Div* p_div, int p_rows, int p_cols);
+		Selection(Div* div, int height, int width, int yPos, int xPos);
+
+		void makeSelection();
 };
 
 #endif

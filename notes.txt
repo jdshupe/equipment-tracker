@@ -1,3 +1,3 @@
 1) enable number values to be formatted with ',', decimals, and leading value such as '$'
 2) table row scrolling for when more data rows are returned than there are table rows. 
-
+3) the whole project needs to handle resizing but specifically columns on a div need to shrink appropriately

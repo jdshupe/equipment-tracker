@@ -6,12 +6,14 @@
 
 using namespace std;
 
-Text::Text(Div* _div, string _text, int _y, int _x)
+Text::Text(Div* _div, string _text, int _y, int _x, int p_width)
 {
 	m_text = _text;
 	m_yPos = _y;
 	m_xPos = _x;
 	m_div = _div;
+	p_width == 0 ? m_width = m_text.length() : m_width = p_width;
+
 
 	Draw();
 }

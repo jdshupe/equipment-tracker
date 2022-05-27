@@ -1,11 +1,12 @@
 CC = g++
-src = $(wildcard src/*.cpp)
+src = $(wildcard src/*.cpp) \
+	  $(wildcard src/divs/*.cpp)
 obj = $(src:.cpp=.o)
 
 LDFLAGS = -lncurses -lpqxx
 
 equipmentTracker: $(obj)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -ggdb -o $@ $^ $(LDFLAGS)
 
 .PHONY: clean
 clean:
