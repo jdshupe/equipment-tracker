@@ -13,10 +13,10 @@ void Selection::makeSelection()
 	curs_set(1);
 	int ch;
 
-	while((ch = getch()) != KEY_ENTER)
+	while(ch != 10)
 	{
-		m_value =+ mvwgetch(m_div->win(), m_yPos, m_xPos + m_value.length());
-	
+		m_value += mvwgetch(m_div->win(), m_yPos, m_xPos + m_value.length());
+		mvwprintw(m_div->win(), 15, 15, m_value.c_str() );
 	}
 }
 
