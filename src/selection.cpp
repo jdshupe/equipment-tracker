@@ -9,14 +9,27 @@ Selection::Selection(Div* div, int height, int width, int yPos, int xPos)
 
 void Selection::makeSelection()
 {
-	echo();
+	noecho();
 	curs_set(1);
+	wmove(m_div->win(), m_yPos, m_xPos);
 	int ch;
 
-	while(ch != 10)
+	while((ch = wgetch(m_div->win())) != 10)
 	{
-		m_value += mvwgetch(m_div->win(), m_yPos, m_xPos + m_value.length());
-		mvwprintw(m_div->win(), 15, 15, m_value.c_str() );
+		switch (ch) {
+			case KEY_BACKSPACE:
+			case KEY_DC:
+			case 127:
+				// TODO(bug) if m_value is empty and delete is pressed it throws a segmentation error
+				m_value.pop_back();
+				mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", m_value.c_str());
+				wclrtoeol(m_div->win());
+				break;
+			default:
+				m_value += (ch);
+				mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", m_value.c_str());
+				break;
+		}
 	}
 }
 
