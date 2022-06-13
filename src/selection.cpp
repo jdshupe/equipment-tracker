@@ -4,6 +4,7 @@
 Selection::Selection(Div* div, int height, int width, int yPos, int xPos)
 : Element(div, height, width, yPos, xPos)
 {
+	m_dataList = {{"Delivery","EQ- Delivery"},{"Pick Up","EQ- Pick Up"}};
 
 };
 
@@ -28,8 +29,27 @@ void Selection::makeSelection()
 			default:
 				m_value += (ch);
 				mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", m_value.c_str());
+				updateOptions();
 				break;
 		}
+	}
+}
+
+void Selection::updateOptions()
+// TODO(addition) display results in their own window so the whole window can be deleted on selection
+{
+	int numberOfResults;
+	for (int i = 0; i < m_dataList.size(); i++)
+	{
+		if (m_dataList[i][0].find(m_value) != std::string::npos)
+		{
+			mvwprintw(m_div->win(), m_yPos + numberOfResults, m_xPos, "%s", m_dataList[i][0].c_str());
+			wclrtoeol(m_div->win());
+			numberOfResults++;
+		} else {
+			wclrtoeol(m_div->win());
+		}
+
 	}
 }
 

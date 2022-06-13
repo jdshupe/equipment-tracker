@@ -16,6 +16,10 @@ class Selection : public Element
 		Selection(Div* div, int height, int width, int yPos, int xPos);
 
 		void makeSelection();
+
+		void makeDataList(std::string dataString);
+
+		void updateOptions();
 };
 
 #endif
