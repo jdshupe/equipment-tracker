@@ -57,3 +57,13 @@ void Selection::updateOptions()
 	}
 }
 
+WINDOW* Selection::createWindow()
+{
+	WINDOW* local_win;
+
+	local_win = newwin(5, m_width, m_yPos + 1, m_xPos);
+
+	return local_win;
+}
+
+

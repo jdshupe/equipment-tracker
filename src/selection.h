@@ -11,6 +11,9 @@ class Selection : public Element
 	private:
 		std::vector<std::vector<std::string>>		m_dataList;
 		std::string									m_value;
+		WINDOW*										m_optionsWindow;
+
+		WINDOW* createWindow();
 
 	public:
 		Selection(Div* div, int height, int width, int yPos, int xPos);
