@@ -113,5 +113,6 @@ void setColors()
 
 	init_pair(1, COLOR_GREEN, -1);
 	init_pair(2, 8, -1);
+	init_pair(3, COLOR_WHITE, 8);
 }
 

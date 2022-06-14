@@ -37,6 +37,12 @@ class Div
 		int width() { return m_width; };
 		void width(int width) {m_width = width; };
 
+		int yPos() { return m_yPos; };
+		void yPos(int yPos) { m_yPos = yPos; };
+
+		int xPos() { return m_xPos; };
+		void xPos(int xPos) { m_xPos = xPos; };
+
 		WINDOW* win() { return m_window; };
 };
 
