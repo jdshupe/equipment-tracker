@@ -109,6 +109,9 @@ void startCurses()
 
 void setColors()
 {
+	init_color(8, 700, 700, 700);
+
 	init_pair(1, COLOR_GREEN, -1);
+	init_pair(2, 8, -1);
 }
 

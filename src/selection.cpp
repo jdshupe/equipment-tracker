@@ -21,15 +21,17 @@ void Selection::makeSelection()
 			case KEY_BACKSPACE:
 			case KEY_DC:
 			case 127:
-				// TODO(bug) if m_value is empty and delete is pressed it throws a segmentation error
-				m_value.pop_back();
-				mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", m_value.c_str());
-				wclrtoeol(m_div->win());
+				if (m_value.length() != 0) 
+				{
+					m_value.pop_back();
+					mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", m_value.c_str());
+					wclrtoeol(m_div->win());
+				}
 				break;
 			default:
 				m_value += (ch);
-				mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", m_value.c_str());
 				updateOptions();
+				mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", m_value.c_str());
 				break;
 		}
 	}
@@ -43,8 +45,10 @@ void Selection::updateOptions()
 	{
 		if (m_dataList[i][0].find(m_value) != std::string::npos)
 		{
+			wattron(m_div->win(), COLOR_PAIR(2));	
 			mvwprintw(m_div->win(), m_yPos + numberOfResults, m_xPos, "%s", m_dataList[i][0].c_str());
 			wclrtoeol(m_div->win());
+			wattroff(m_div->win(), COLOR_PAIR(2));	
 			numberOfResults++;
 		} else {
 			wclrtoeol(m_div->win());
