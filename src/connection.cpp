@@ -1,4 +1,5 @@
 // connection.cpp
+// -*- lsst-c++ -*-
 #include "connection.h"
 
 using namespace std;

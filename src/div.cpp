@@ -16,6 +16,19 @@ Div::Div(string name, int yPos, int xPos, int height, int width)
 	draw();
 }
 
+Div::Div(string name, int height, int width)
+{
+	m_name			= name;
+	m_yPos			= (LINES - height) / 2;
+	m_xPos			= (COLS - width) / 2;
+	m_height		= height;
+	m_width			= width;
+
+	m_window		= Div::createWindow();
+
+	draw();
+}
+
 WINDOW* Div::createWindow()
 {
 	WINDOW* local_win;

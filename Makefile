@@ -3,7 +3,7 @@ src = $(wildcard src/*.cpp) \
 	  $(wildcard src/divs/*.cpp)
 obj = $(src:.cpp=.o)
 
-LDFLAGS = -lncurses -lpqxx
+LDFLAGS = -lpqxx -lncurses 
 
 equipmentTracker: $(obj)
 	$(CC) -ggdb -o $@ $^ $(LDFLAGS)
