@@ -5,6 +5,7 @@
 #include "element.h"
 #include <vector>
 #include <string>
+#include "connection.h"
 
 class Selection : public Element
 {
@@ -21,7 +22,7 @@ class Selection : public Element
 
 		void makeSelection();
 
-		void makeDataList(std::string dataString);
+		void populateData(std::string data, int xDim);
 
 		void updateOptions();
 

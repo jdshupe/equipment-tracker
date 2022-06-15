@@ -4,9 +4,8 @@
 Selection::Selection(Div* div, int height, int width, int yPos, int xPos)
 : Element(div, height, width, yPos, xPos)
 {
-	m_dataList = {{"Delivery","EQ- Delivery"},{"Pick Up","EQ- Pick Up"}};
+	populateData(database::select("SELECT description, code FROM equipment;"), 2);
 	m_selectedOption = 1;
-
 };
 
 void Selection::makeSelection()
@@ -90,3 +89,17 @@ WINDOW* Selection::createWindow()
 
 void Selection::rowDown(){ m_selectedOption == m_dataList.size() ? m_selectedOption = 1 : m_selectedOption++; }
 void Selection::rowUp()  { m_selectedOption == 1 ? m_selectedOption = m_dataList.size() : m_selectedOption--; }
+
+void Selection::populateData(std::string data, int xDim)
+{
+	int yDimIncrement;
+	int	xDimIncrement = 0;
+	while (data.length() != 0)
+	{
+		xDimIncrement == 0 ? yDimIncrement = 0 : yDimIncrement = xDimIncrement / xDim;
+		m_dataList.resize(yDimIncrement + 1);
+		m_dataList[yDimIncrement].push_back(data.substr(0, data.find(",")));
+		data.erase(0, data.find(",") + 1);
+		xDimIncrement++;
+	}
+}
