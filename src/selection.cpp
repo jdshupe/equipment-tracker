@@ -5,6 +5,7 @@ Selection::Selection(Div* div, int height, int width, int yPos, int xPos)
 : Element(div, height, width, yPos, xPos)
 {
 	m_dataList = {{"Delivery","EQ- Delivery"},{"Pick Up","EQ- Pick Up"}};
+	m_selectedOption = 1;
 
 };
 
@@ -12,9 +13,10 @@ void Selection::makeSelection()
 {
 	noecho();
 	curs_set(1);
+	keypad(m_div->win(), TRUE);
 	wmove(m_div->win(), m_yPos, m_xPos);
 	m_optionsWindow = createWindow();
-	int ch;
+	wchar_t ch;
 
 	while((ch = wgetch(m_div->win())) != 10)
 	{
@@ -30,7 +32,15 @@ void Selection::makeSelection()
 					mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", displayValue.c_str());
 					wmove(m_div->win(), m_yPos, m_xPos + m_value.length());
 					updateOptions();
-				}
+				};
+				break;
+			case KEY_UP:
+				rowUp();
+				updateOptions();
+				break;
+			case KEY_DOWN:
+				rowDown();
+				updateOptions();
 				break;
 			default:
 				m_value += (ch);
@@ -42,7 +52,6 @@ void Selection::makeSelection()
 }
 
 void Selection::updateOptions()
-// TODO(addition) display results in their own window so the whole window can be deleted on selection
 {
 	int numberOfResults = 0; ///> holds row number to print each result
 	werase(m_optionsWindow);
@@ -54,10 +63,16 @@ void Selection::updateOptions()
 		{
 			if (m_dataList[i][0].find(m_value) != std::string::npos)
 			{
-				wattron(m_optionsWindow, COLOR_PAIR(3));	
+				if(m_selectedOption == numberOfResults + 1)
+				{
+					wattron(m_optionsWindow, COLOR_PAIR(4));
+				} else {
+					wattron(m_optionsWindow, COLOR_PAIR(3));	
+				}
+
 				mvwprintw(m_optionsWindow, numberOfResults, 0, "%s", m_dataList[i][0].c_str());
 				wrefresh(m_optionsWindow);
-				wattroff(m_optionsWindow, COLOR_PAIR(3));	
+				m_selectedOption == i + 1 ? wattroff(m_optionsWindow, COLOR_PAIR(4)): wattroff(m_optionsWindow, COLOR_PAIR(3));	
 				numberOfResults++;
 			}
 		}
@@ -73,4 +88,5 @@ WINDOW* Selection::createWindow()
 	return local_win;
 }
 
-
+void Selection::rowDown(){ m_selectedOption == m_dataList.size() ? m_selectedOption = 1 : m_selectedOption++; }
+void Selection::rowUp()  { m_selectedOption == 1 ? m_selectedOption = m_dataList.size() : m_selectedOption--; }

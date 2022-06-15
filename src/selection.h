@@ -9,9 +9,10 @@
 class Selection : public Element
 {
 	private:
-		std::vector<std::vector<std::string>>		m_dataList;
-		std::string									m_value;
-		WINDOW*										m_optionsWindow;
+		std::vector<std::vector<std::string>>	m_dataList;
+		std::string								m_value;
+		WINDOW*									m_optionsWindow;
+		int										m_selectedOption;
 
 		WINDOW* createWindow();
 
@@ -23,6 +24,9 @@ class Selection : public Element
 		void makeDataList(std::string dataString);
 
 		void updateOptions();
+
+		void rowDown();
+		void rowUp();
 };
 
 #endif

@@ -73,7 +73,7 @@ int main()
 					header_table.render();
 					break;
 				case 'N':
-					NewRental rentalWindow("New Rental", 3, 3, LINES - 6, COLS - 6);
+					NewRental rentalWindow("New Rental", 20, 60);
 					activeWindow = &header_win;
 					header_win.render();
 					header_table.render();
@@ -113,6 +113,7 @@ void setColors()
 
 	init_pair(1, COLOR_GREEN, -1);
 	init_pair(2, 8, -1);
-	init_pair(3, COLOR_WHITE, 8);
+	init_pair(3, 8, COLOR_WHITE);
+	init_pair(4, COLOR_GREEN, COLOR_WHITE);
 }
 

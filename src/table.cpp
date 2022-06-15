@@ -130,12 +130,6 @@ void Table::refreshData()
 	draw();
 }
 
-void Table::rowDown()
-{
-	m_selectedRow == m_dataRows ? m_selectedRow = 1 : m_selectedRow++;
-}
+void Table::rowDown(){ m_selectedRow == m_dataRows ? m_selectedRow = 1 : m_selectedRow++; }
 
-void Table::rowUp()
-{
-	m_selectedRow == 1 ? m_selectedRow = m_dataRows : m_selectedRow--;
-}
+void Table::rowUp(){ m_selectedRow == 1 ? m_selectedRow = m_dataRows : m_selectedRow--; }
