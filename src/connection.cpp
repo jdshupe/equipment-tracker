@@ -39,6 +39,38 @@ string database::select(string p_statement, int* data_rows)
 		return "NULL";
 	}
 }
+string database::select(string p_statement)
+{
+	string sql = p_statement;
+	try 
+	{
+		connection C("user=postgres " \
+					"password=Thisisastrongpassword " \
+					"host=db.zhjuuyxtilgjluzixcwh.supabase.co " \
+					"port=5432 " \
+					"dbname=postgres");
+		if (C.is_open())
+		{
+		} else {
+			cout << "Can't open database" << endl;
+		}
+
+		nontransaction N(C);
+		string resultData;
+		result R( N.exec( sql ));
+
+		for (result::const_iterator c = R.begin(); c != R.end();c++) {
+			for (int i = 0; i < R.columns(); i++) {
+				resultData += c[i].as<string>() + ",";
+			}
+		}
+		C.disconnect();
+		return resultData;
+	} catch (const std::exception &e) {
+		cerr << e.what() << std::endl;
+		return "NULL";
+	}
+}
 
 
 void database::insert(string p_statement)

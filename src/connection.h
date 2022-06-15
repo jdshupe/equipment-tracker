@@ -9,6 +9,7 @@
 namespace database
 {
 	std::string select(std::string p_statement, int* data_rows);
+	std::string select(std::string p_statement);
 
 	void insert(std::string p_statement);
 };
