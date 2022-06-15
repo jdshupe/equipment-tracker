@@ -7,6 +7,12 @@ NewRental::NewRental(std::string name, int yPos, int xPos, int height, int width
 	addElements();
 }
 
+NewRental::NewRental(std::string name, int height, int width)
+	: Div(name, height, width)
+{
+	addElements();
+}
+
 void NewRental::addElements()
 {
 	Text po_number(this, "PO Number:", 1, 2);

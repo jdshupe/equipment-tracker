@@ -25,7 +25,9 @@ class Div
 
 	public:
 		//TODO(feature) add constructor that centers the div
+		/// Constructor that takes x/y and width/height
 		Div(std::string name, int yPos, int xPos, int height, int width);
+		Div(std::string name, int height, int width);
 
 		void render();
 
