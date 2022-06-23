@@ -1,13 +1,44 @@
 // selection.cpp
 #include "selection.h"
+/* 
+ * TODO(feature) when pressing enter, the currently selected option is picked
+ * and added as the input text
+ *
+ * TODO(bug) remove the option window upon selection and redraw the screen
+ *
+ * TODO(feature) store the current query as a string memeber that can has its
+ * own get/set options.
+ *
+ * TODO(rework) Move the collection of data out of the constructor so a selection 
+ * can be initialized without a query and then updated with data later.
+ */
 
+
+/**
+ * Class implementation for a form to hold multiple options and be search able.
+ *
+ * Contains a list of at least one data value that is sorted and displayed upon typing into the main
+ * data display box. List can then be navigated and selected from, updating the form to display the 
+ * appropriate data.
+ *
+ * @param div the parent div where the object is drawn
+ * @param height/width the number of lines/columns the selection display will use
+ * @param yPos/xPos the coordinates of the top left corner of the selection box
+ */
 Selection::Selection(Div* div, int height, int width, int yPos, int xPos)
 : Element(div, height, width, yPos, xPos)
 {
-	populateData(database::select("SELECT description, code FROM equipment;"), 2);
+//	populateData(database::select("SELECT description, code FROM equipment;"), 2);
 	m_selectedOption = 1;
 };
 
+
+/**
+ * Handles the keyinputs when object is active
+ *
+ * Currently has bindings for moving up and down the list, taking input of text and making calls to update
+ * the data list, and handles the delete options.
+ */
 void Selection::makeSelection()
 {
 	noecho();
@@ -50,6 +81,14 @@ void Selection::makeSelection()
 	}
 }
 
+
+/**
+ * Refreshed the data options based on the current input text
+ *
+ * Pulls and displays the top x items in the data list that match the current input text. This is called any-
+ * time the input text is updated. Send the matching items to a local window that is displayed and updated
+ * every call. Has logic to handle highlighting the currently selected option.
+ */
 void Selection::updateOptions()
 {
 	int numberOfResults = 0; ///> holds row number to print each result
@@ -69,7 +108,8 @@ void Selection::updateOptions()
 					wattron(m_optionsWindow, COLOR_PAIR(3));	
 				}
 
-				mvwprintw(m_optionsWindow, numberOfResults, 0, "%s", m_dataList[i][0].c_str());
+				//TODO(bug) program crashes if deleting a character longer thatn the options window
+				mvwprintw(m_optionsWindow, numberOfResults, 0, "%s", m_dataList[i][0].substr(0,m_width).c_str());
 				wrefresh(m_optionsWindow);
 				m_selectedOption == i + 1 ? wattroff(m_optionsWindow, COLOR_PAIR(4)): wattroff(m_optionsWindow, COLOR_PAIR(3));	
 				numberOfResults++;
@@ -78,6 +118,10 @@ void Selection::updateOptions()
 	}
 }
 
+
+/**
+ * Creates the window to hold the filtered data results prior to selection
+ */
 WINDOW* Selection::createWindow()
 {
 	WINDOW* local_win;
@@ -90,6 +134,15 @@ WINDOW* Selection::createWindow()
 void Selection::rowDown(){ m_selectedOption == m_dataList.size() ? m_selectedOption = 1 : m_selectedOption++; }
 void Selection::rowUp()  { m_selectedOption == 1 ? m_selectedOption = m_dataList.size() : m_selectedOption--; }
 
+
+/**
+ * fills the datalist member with data
+ *
+ * @param data a comma separated list of data values, can be a result from the database::request
+ * @param xDim the number of columns of data
+ *
+ * takes the data string and populates an array of arrays with length xDim
+ */
 void Selection::populateData(std::string data, int xDim)
 {
 	int yDimIncrement;

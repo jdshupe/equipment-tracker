@@ -14,6 +14,7 @@ class Selection : public Element
 		std::string								m_value;
 		WINDOW*									m_optionsWindow;
 		int										m_selectedOption;
+		std::string								m_query;
 
 		WINDOW* createWindow();
 
@@ -28,6 +29,11 @@ class Selection : public Element
 
 		void rowDown();
 		void rowUp();
+
+		// get/set for selection data query
+		const std::string& query() const { return m_query; }
+		void query(const std::string query) { m_query = query; }
 };
+
 
 #endif

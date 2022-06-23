@@ -15,15 +15,22 @@ NewRental::NewRental(std::string name, int height, int width)
 
 void NewRental::addElements()
 {
-	Text po_number(this, "PO Number:", 1, 2);
-	Text supplier(this, "Supplier:", 2, 2);
-	Text duration(this, "Duration:", 3, 2);
-	Text length(this, "Cycle Length:", 4, 2);
-	Text startDate(this, "Start Date:", 5, 2);
+	// add text labels to the top section of the form. This is for info about the rental as a whole
+	Text textLabelForPoNumber(this, "PO Number:", 1, 2);
+	Text textLabelForSupplier(this, "Supplier:", 2, 2);
+	Text textLabelForDuration(this, "Duration:", 3, 2);
+	Text textLabelForLength(this, "Cycle Length:", 4, 2);
+	Text textLabelForStartDate(this, "Start Date:", 5, 2);
 
-	Text description(this, "Description", 7, 2);
-	Text code(this, "Code", 7, 50);
-	Text cost(this, "Cost", 7, 65);
+	// add text labels to the table for line items
+	Text textLabelForDescription(this, "Description", 7, 2);
+	Text textLabelForCode(this, "Code", 7, 50);
+	Text textLabelForCost(this, "Cost", 7, 65);
+
+	Selection supplierSel(this, 1, 30, 2, textLabelForSupplier.lastCol() + 2);
+	supplierSel.populateData(database::select("SELECT name FROM supplier;"),1);
+	Selection descriptionSel(this, 1, 20, 8, 2);
+	descriptionSel.populateData(database::select("SELECT description, code FROM equipment;"), 2);
 
 	char s_poNumber[80], s_supplier[80], s_duration[10], s_length[10], s_startDate[80];
 	char s_description[80], s_code[80], s_cost[80];
@@ -31,11 +38,11 @@ void NewRental::addElements()
 	echo();
 	curs_set(1);
 
-	mvwgetstr(this->win(), 1, po_number.lastCol() + 2, s_poNumber);
-	mvwgetstr(this->win(), 2, supplier.lastCol() + 2, s_supplier);
-	mvwgetstr(this->win(), 3, duration.lastCol() + 2, s_duration);
-	mvwgetstr(this->win(), 4, length.lastCol() + 2, s_length);
-	mvwgetstr(this->win(), 5, startDate.lastCol() + 2, s_startDate);
+	mvwgetstr(this->win(), 1, textLabelForPoNumber.lastCol() + 2, s_poNumber);
+	supplierSel.makeSelection();
+	mvwgetstr(this->win(), 3, textLabelForDuration.lastCol() + 2, s_duration);
+	mvwgetstr(this->win(), 4, textLabelForLength.lastCol() + 2, s_length);
+	mvwgetstr(this->win(), 5, textLabelForStartDate.lastCol() + 2, s_startDate);
 
 	std::string sqlNewPO;
 	std::string sqlRentalDetail;
@@ -58,7 +65,6 @@ void NewRental::addElements()
 					"(SELECT id FROM purchase_order WHERE number = '") + s_poNumber + std::string("'),"
 					"(SELECT id FROM equipment WHERE code = '");
 
-	Selection descriptionSel(this, 1, 20, 8, 2);
 	descriptionSel.makeSelection();
 
 	noecho();
