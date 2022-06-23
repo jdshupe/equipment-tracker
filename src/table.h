@@ -45,6 +45,7 @@ class Table : public Element
 		void rowDown();
 		void rowUp();
 
+		// get/set for the table query
 		const std::string& query() const { return m_query; }
 		void query(const std::string query) { m_query = query; }
 };
