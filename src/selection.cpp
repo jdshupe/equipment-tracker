@@ -5,12 +5,6 @@
  * and added as the input text
  *
  * TODO(bug) remove the option window upon selection and redraw the screen
- *
- * TODO(feature) store the current query as a string memeber that can has its
- * own get/set options.
- *
- * TODO(rework) Move the collection of data out of the constructor so a selection 
- * can be initialized without a query and then updated with data later.
  */
 
 
