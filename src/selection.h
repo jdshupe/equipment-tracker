@@ -2,6 +2,8 @@
 #ifndef SELECTION_H
 #define SELECTION_H
 
+#include <algorithm>
+#include <cctype>
 #include "element.h"
 #include <vector>
 #include <string>
@@ -33,6 +35,8 @@ class Selection : public Element
 		// get/set for selection data query
 		const std::string& query() const { return m_query; }
 		void query(const std::string query) { m_query = query; }
+
+		std::string toLowerCase(std::string string);
 };
 
 

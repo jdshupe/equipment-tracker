@@ -93,7 +93,7 @@ void Selection::updateOptions()
 	{
 		for (int i = 0; i < m_dataList.size(); i++)
 		{
-			if (m_dataList[i][0].find(m_value) != std::string::npos)
+			if (toLowerCase(m_dataList[i][0]).find(toLowerCase(m_value)) != std::string::npos)
 			{
 				if(m_selectedOption == numberOfResults + 1)
 				{
@@ -149,4 +149,14 @@ void Selection::populateData(std::string data, int xDim)
 		data.erase(0, data.find(",") + 1);
 		xDimIncrement++;
 	}
+}
+
+/**
+ * returns an input string in all lower case letters
+ *
+ * @param string a string value
+ */
+std::string Selection::toLowerCase(std::string string) {
+	std::transform(string.begin(), string.end(), string.begin(), ::tolower );
+	return string;
 }

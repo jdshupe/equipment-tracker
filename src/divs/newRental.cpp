@@ -27,9 +27,9 @@ void NewRental::addElements()
 	Text textLabelForCode(this, "Code", 7, 50);
 	Text textLabelForCost(this, "Cost", 7, 65);
 
-	Selection supplierSel(this, 1, 30, 2, textLabelForSupplier.lastCol() + 2);
+	Selection supplierSel(this, 1, 20, 2, textLabelForSupplier.lastCol() + 2);
 	supplierSel.populateData(database::select("SELECT name FROM supplier;"),1);
-	Selection descriptionSel(this, 1, 20, 8, 2);
+	Selection descriptionSel(this, 1, 30, 8, 2);
 	descriptionSel.populateData(database::select("SELECT description, code FROM equipment;"), 2);
 
 	char s_poNumber[80], s_supplier[80], s_duration[10], s_length[10], s_startDate[80];
