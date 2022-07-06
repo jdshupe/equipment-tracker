@@ -16,19 +16,20 @@ NewRental::NewRental(std::string name, int height, int width)
 void NewRental::addElements()
 {
 	// add text labels to the top section of the form. This is for info about the rental as a whole
-	Text textLabelForPoNumber(this, "PO Number:", 1, 2);
-	Text textLabelForSupplier(this, "Supplier:", 2, 2);
-	Text textLabelForDuration(this, "Duration:", 3, 2);
-	Text textLabelForLength(this, "Cycle Length:", 4, 2);
-	Text textLabelForStartDate(this, "Start Date:", 5, 2);
+	Text textLabelForPoNumber    (this, "PO Number:",	1, 2);
+	Text textLabelForSupplier    (this, "Supplier:",	2, 2);
+	Text textLabelForDuration    (this, "Duration:",	3, 2);
+	Text textLabelForLength      (this, "Cycle Length:",4, 2);
+	Text textLabelForStartDate   (this, "Start Date:",	5, 2);
 
 	// add text labels to the table for line items
-	Text textLabelForDescription(this, "Description", 7, 2);
-	Text textLabelForCode(this, "Code", 7, 50);
-	Text textLabelForCost(this, "Cost", 7, 65);
+	Text textLabelForDescription(this, "Description",	 7, 2);
+	Text textLabelForCode		(this, "Code",			 7, 50);
+	Text textLabelForCost		(this, "Cost",			 7, 65);
 
 	Selection supplierSel(this, 1, 20, 2, textLabelForSupplier.lastCol() + 2);
 	supplierSel.populateData(database::select("SELECT name FROM supplier;"),1);
+
 	Selection descriptionSel(this, 1, 30, 8, 2);
 	descriptionSel.populateData(database::select("SELECT description, code FROM equipment;"), 2);
 
