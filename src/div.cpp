@@ -46,7 +46,6 @@ void Div::draw()
 	wrefresh(m_window);
 }
 
-
 void Div::render()
 {
 	draw();

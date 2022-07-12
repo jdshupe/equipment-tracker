@@ -13,6 +13,7 @@ class Selection : public Element
 {
 	private:
 		std::vector<std::vector<std::string>>	m_dataList;
+		std::vector<std::vector<std::string>>	m_displayedList;
 		std::string								m_value;
 		WINDOW*									m_optionsWindow;
 		int										m_selectedOption;
