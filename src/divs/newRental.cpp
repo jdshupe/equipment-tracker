@@ -1,12 +1,24 @@
 // newRental.cpp
 #include "newRental.h"
 
+/**
+ * Class constructor, displays the window with a given width/height a position
+ *
+ * @param name the name to be displayed in the border
+ * @param yPos/xPos the coordinates of the top left corner
+ * @param height/width the rows/columns of the box
+ */
 NewRental::NewRental(std::string name, int yPos, int xPos, int height, int width)
 	: Div(name, yPos, xPos, height, width)
 {
 	addElements();
 }
 
+
+/**
+ * Class constructr, same as above except this will center the window on the
+ * screen. No coordinates are needed.
+ */
 NewRental::NewRental(std::string name, int height, int width)
 	: Div(name, height, width)
 {
@@ -46,6 +58,7 @@ void NewRental::addElements()
 	// with transversing an index of element positions
 	mvwgetstr(this->win(), 1, textLabelForPoNumber.lastCol() + 2, s_poNumber);
 	supplierSel.makeSelection();
+	textLabelForLength.Draw();
 	mvwgetstr(this->win(), 3, textLabelForDuration.lastCol() + 2, s_duration);
 	mvwgetstr(this->win(), 4, textLabelForLength.lastCol() + 2, s_length);
 	mvwgetstr(this->win(), 5, textLabelForStartDate.lastCol() + 2, s_startDate);

@@ -1,9 +1,6 @@
 // selection.cpp
 #include "selection.h"
 /* 
- * TODO(feature) when pressing enter, the currently selected option is picked
- * and added as the input text
- *
  * TODO(bug) remove the option window upon selection and redraw the screen
  */
 
@@ -102,14 +99,14 @@ void Selection::makeSelection()
 	 * printing it, removing the selection window, and passing the values
 	 * associated to the rest of the form
 	 */
+	wclear(m_optionsWindow);
+	wrefresh(m_optionsWindow);
 	delwin(m_optionsWindow);
 	mvwprintw(m_div->win(), m_yPos, m_xPos, "%s",
-			m_displayedList[m_selectedOption-1][0]);
-	wrefresh(m_div->win());
-
+			m_displayedList[m_selectedOption-1][0].c_str());
+	
+	echo();
 }
-
-
 
 
 /**
@@ -125,6 +122,7 @@ void Selection::updateOptions()
 	int numberOfResults = 0; ///> holds row number to print each result
 	werase(m_optionsWindow);
 	wrefresh(m_optionsWindow);
+	m_displayedList.clear();
 	
 	if(m_value != "")
 	{
