@@ -3,7 +3,21 @@
 
 using namespace std;
 
-Table::Table(Div* div, int height, int width, int yPos, int xPos, string headers, string widths) 
+/**
+ * Class implementation for a table form element
+ *
+ * Displays a matrix of Data currently with required header row, uses a query
+ * to pull data from the database.
+ *
+ * @param div the parent div where the object is drawn
+ * @param height/width number of lines/columns the table occupies, currently
+ *		this also sets messes with the displayed table rows
+ * @param yPos/xPos coordinates of the top left corner
+ * @param headers comma separated list containing the header titles
+ * @param widths comma separated list of column widths, used to build the table
+ */
+Table::Table(Div* div, int height, int width, int yPos, int xPos, string headers,
+		string widths) 
 : Element(div, height, width, yPos, xPos)
 {
 	m_headers		= headers;
@@ -11,9 +25,10 @@ Table::Table(Div* div, int height, int width, int yPos, int xPos, string headers
 
 	createColumnWidths(widths);
 
-	/**TODO[refactor] the number of rows in the cell matrix should be based of off the data returned
-	 * not the height of the div. This will enable row scrolling instead of having to requery data
-	 * every time the page is scrolled.
+	/**TODO[refactor] the number of rows in the cell matrix should be based of 
+	 * off the data returned not the height of the div. This will enable row 
+	 * scrolling instead of having to requery data every time the page is 
+	 * scrolled.
 	 */
 	m_cellMatrix.resize(height);
 	for (size_t i = 0; i < height; i++) m_cellMatrix[i].resize(m_widths.size());

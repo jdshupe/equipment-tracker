@@ -1,3 +1,31 @@
+* TODO options
 1) enable number values to be formatted with ',', decimals, and leading value such as '$'
+   * This is similar to hox D3.js formats displayed data
 2) table row scrolling for when more data rows are returned than there are table rows. 
 3) the whole project needs to handle resizing but specifically columns on a div need to shrink appropriately
+
+* Need to decide if tables are going to be column or row based
+|------+------------------------------------------+----------------------------------------------|
+|      | Row Based                                | Column Based                                 |
+|------+------------------------------------------+----------------------------------------------|
+| Pros | - Querying and adding data               | - able to contain display information        |
+|      | is exceptionally easy                    | such as columns width, style, and position   |
+|      | - When pulling and displaying data       | which are all the same for a column          |
+|      | it is easier to select all the data      |                                              |
+|      | from one line than it is to get the      |                                              |
+|      | index of a bunch of columns              |                                              |
+|------+------------------------------------------+----------------------------------------------|
+| Cons | - will have to find a way to store       | will have to figure out a quicker way to     |
+|      | the display information.                 | pull the data than just using the selected   |
+|      | * first thought is to add a row          | index for all columns and getting that value |
+|      | before the headers to store format info  |                                              |
+|      | as a string that is parsed and displayed |                                              |
+|      | similar to D3 format options             |                                              |
+|------+------------------------------------------+----------------------------------------------|
+
+* Should forms be a different object than a Div?
+  * For that matter, should divs be a different object than a window
+* Need to make navigation of forms less ridgid.
+** Index the objects in order of navigation
+   This would allow mapping of <Tab> to increase the index by one, and <Shift><Tab> to decrease the index allowing
+   for forwards and backwards navigation.
