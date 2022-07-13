@@ -57,3 +57,10 @@ void Div::destroy_win()
 	wrefresh(m_window);
 	delwin(m_window);
 }
+
+void Div::addChild(std::string name, Element* elementToAdd)
+{
+	elementToAdd->name(name);
+	m_children.push_back(elementToAdd);
+}
+

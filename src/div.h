@@ -16,7 +16,8 @@ class Div
 		int						m_height;
 		int						m_width;
 		WINDOW*					m_window;
-		std::vector<Element*>	m_elements;
+
+		std::vector<Element*>	m_children;
 
 		WINDOW* createWindow();
 
@@ -46,6 +47,8 @@ class Div
 		void xPos(int xPos) { m_xPos = xPos; };
 
 		WINDOW* win() { return m_window; };
+
+		void addChild(std::string name, Element* elementToAdd);
 };
 
 #endif
