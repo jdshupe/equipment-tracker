@@ -27,10 +27,8 @@ int main()
 	activeWindow = &header_win;
 	Div footer_win("Key Bindings", LINES - 3, 0, 3, COLS);
 
-	Text key_bind_1(&footer_win, "F1:Quit", 1, 2);
-	Text key_bind_2(&footer_win, "N:New Rental", 1, key_bind_1.lastCol() + 2);
-	Text key_bind_3(&footer_win, "F:Filter", 1, key_bind_2.lastCol() + 2);
-	Text key_bind_4(&footer_win, "E:Extend", 1, key_bind_3.lastCol() + 2);
+	Text key_bind_1(&footer_win, 
+			"F1:Quit  N:New Rental  F:Filter  E:Extend", 1, 2);
 
 	string headers = "PO Number,Description,Price,Start Date,End Date ";
 	string widths = "14,50,10,11,11";
@@ -73,6 +71,8 @@ int main()
 					header_table.render();
 					break;
 				case 'N':
+					Text key_bind_2(&footer_win, 
+						"F1:Cancel  F2:Add Monthly Line  F3:Add One Time Fee", 1, 2);
 					NewRental rentalWindow("New Rental", 20, 60);
 					activeWindow = &header_win;
 					header_win.render();
