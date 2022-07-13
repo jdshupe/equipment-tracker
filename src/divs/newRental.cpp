@@ -16,7 +16,7 @@ NewRental::NewRental(std::string name, int yPos, int xPos, int height, int width
 
 
 /**
- * Class constructr, same as above except this will center the window on the
+ * Class constructor, same as above except this will center the window on the
  * screen. No coordinates are needed.
  */
 NewRental::NewRental(std::string name, int height, int width)
@@ -30,6 +30,7 @@ void NewRental::addElements()
 	// add text labels to the top section of the form. This is for info about 
 	// the rental as a whole
 	Text textLabelForPoNumber	(this, "PO Number:",	1, 2);
+	this->addChild("PO Number", &textLabelForPoNumber);
 	Text textLabelForSupplier   (this, "Supplier:",		2, 2);
 	Text textLabelForDuration   (this, "Duration:",		3, 2);
 	Text textLabelForLength     (this, "Cycle Length:",	4, 2);
@@ -48,25 +49,22 @@ void NewRental::addElements()
 				"SELECT description, code FROM equipment;"
 				), 2);
 
-	char s_poNumber[80], s_supplier[80], s_duration[10], s_length[10], s_startDate[80];
-	char s_description[80], s_code[80], s_cost[80];
-
 	echo();
 	curs_set(1);
 
 	// this section is the input navigation of the form, this will be replaced
 	// with transversing an index of element positions
-	mvwgetstr(this->win(), 1, textLabelForPoNumber.lastCol() + 2, s_poNumber);
+	std::string poNumber = textLabelForPoNumber.getData();
 	supplierSel.makeSelection();
 	textLabelForLength.Draw();
-	mvwgetstr(this->win(), 3, textLabelForDuration.lastCol() + 2, s_duration);
-	mvwgetstr(this->win(), 4, textLabelForLength.lastCol() + 2, s_length);
-	mvwgetstr(this->win(), 5, textLabelForStartDate.lastCol() + 2, s_startDate);
+	std::string duration = textLabelForDuration.getData();
+	std::string length = textLabelForLength.getData();
+	std::string startDate = textLabelForStartDate.getData();
 
 	std::string sqlNewPO;
 	std::string sqlRentalDetail;
 
-	sqlNewPO = std::string(
+	/*sqlNewPO = std::string(
 			"INSERT INTO purchase_order (\
 				number,\
 				supplier_id,\
@@ -86,7 +84,7 @@ void NewRental::addElements()
 				"description)"
 			"VALUES("
 				"(SELECT id FROM purchase_order WHERE number = '") + s_poNumber + std::string("'),"
-					"(SELECT id FROM equipment WHERE code = '");
+					"(SELECT id FROM equipment WHERE code = '");*/
 
 	descriptionSel.makeSelection();
 
