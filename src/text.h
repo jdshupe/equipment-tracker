@@ -21,6 +21,8 @@ class Text : public Element
 		WINDOW* win() { return m_div->win(); }
 		
 		int lastCol() { return m_width + m_xPos; }
+
+		std::string getData();
 };
 
 #endif

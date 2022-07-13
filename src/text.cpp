@@ -21,3 +21,14 @@ void Text::Draw()
 	mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", m_displayedText.c_str());
 	wrefresh(m_div->win());
 };
+
+
+std::string Text::getData()
+{
+	char value[80];
+	mvwgetstr(m_div->win(), m_yPos, lastCol() + 1, value);
+	return std::string(value);
+}
+
+
+
