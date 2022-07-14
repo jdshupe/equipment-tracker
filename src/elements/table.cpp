@@ -17,8 +17,8 @@ using namespace std;
  * @param widths comma separated list of column widths, used to build the table
  */
 Table::Table(std::string name, Div* div, int height, int width, int yPos, 
-		int xPos, string headers, string widths)
-: Element(name, div, height, width, yPos, xPos)
+		int xPos, string headers, string widths, bool hidden)
+: Element(name, div, height, width, yPos, xPos, hidden)
 {
 	m_headers		= headers;
 	m_selectedRow	= 1;

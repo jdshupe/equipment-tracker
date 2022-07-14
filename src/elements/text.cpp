@@ -5,8 +5,8 @@
 
 using namespace std;
 
-Text::Text(std::string name, Div* _div, string _text, int _y, int _x, int p_width)
-: Element(name, _div, 1, p_width, _y, _x)
+Text::Text(std::string name, Div* _div, string _text, int _y, int _x, bool hidden, int p_width)
+: Element(name, _div, 1, p_width, _y, _x, hidden)
 {
 	m_text = _text;
 	p_width == 0 ? m_width = m_text.length() : m_width = p_width;

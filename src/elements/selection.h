@@ -22,7 +22,7 @@ class Selection : public Element
 		WINDOW* createWindow();
 
 	public:
-		Selection(std::string name, Div* div, int height, int width, int yPos, int xPos);
+		Selection(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden = false);
 
 		void makeSelection();
 

@@ -34,7 +34,8 @@ class Table : public Element
 		void createColumnWidths(std::string value);
 
 	public:
-		Table(std::string name, Div* div, int height, int width, int yPos, int xPos, std::string headers, std::string widths = "none");
+		Table(std::string name, Div* div, int height, int width, int yPos, int xPos,
+				std::string headers, std::string widths = "none", bool hidden = false);
 
 		void render();
 

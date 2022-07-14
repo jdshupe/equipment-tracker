@@ -1,7 +1,7 @@
 // element.cpp
 #include "element.h"
 
-Element::Element(std::string name, Div* div, int height, int width, int yPos, int xPos)
+Element::Element(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden)
 {
 	m_name		= name;
 	m_div		= div;
@@ -9,6 +9,7 @@ Element::Element(std::string name, Div* div, int height, int width, int yPos, in
 	m_width		= width;
 	m_yPos		= yPos;
 	m_xPos		= xPos;
+	m_hidden	= hidden;
 
-	m_div->addChild(m_name, this);
+	if (!m_hidden) m_div->addChild(m_name, this);
 };

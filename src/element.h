@@ -14,9 +14,10 @@ class Element
 		int				m_width, m_height;
 		int				m_xPos, m_yPos;
 		std::string		m_name;
+		bool			m_hidden;
 
 	public:
-		Element(std::string name, Div* div, int height, int width, int yPos, int xPos);
+		Element(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden = false);
 
 		int		height()			{ return m_height; }
 		void	height(int height)	{ m_height = height; }
