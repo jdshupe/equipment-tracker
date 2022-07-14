@@ -2,9 +2,9 @@
 #include <curses.h>
 #include "div.h"
 #include "divs/newRental.h"
-#include "text.h"
-#include "table.h"
 #include <string>
+#include "elements/table.h"
+#include "elements/text.h"
 
 using namespace std;
 
@@ -27,13 +27,13 @@ int main()
 	activeWindow = &header_win;
 	Div footer_win("Key Bindings", LINES - 3, 0, 3, COLS);
 
-	Text key_bind_1(&footer_win, 
+	Text key_bind_1("KeyBinds", &footer_win, 
 			"F1:Quit  N:New Rental  F:Filter  E:Extend", 1, 2);
 
 	string headers = "PO Number,Description,Price,Start Date,End Date ";
 	string widths = "14,50,10,11,11";
 
-	Table header_table(&header_win, LINES-6, COLS-2, 1, 1,  headers, widths);
+	Table header_table("MainTable", &header_win, LINES-6, COLS-2, 1, 1,  headers, widths);
 	header_table.query("\
 			SELECT \
 				o.number as \"PO Number\",\
@@ -71,7 +71,7 @@ int main()
 					header_table.render();
 					break;
 				case 'N':
-					Text key_bind_2(&footer_win, 
+					Text key_bind_2("KeyBinds", &footer_win, 
 						"F1:Cancel  F2:Add Monthly Line  F3:Add One Time Fee", 1, 2);
 					NewRental rentalWindow("New Rental", 20, 60);
 					activeWindow = &header_win;

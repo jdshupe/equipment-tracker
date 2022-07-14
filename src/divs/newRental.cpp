@@ -29,22 +29,21 @@ void NewRental::addElements()
 {
 	// add text labels to the top section of the form. This is for info about 
 	// the rental as a whole
-	Text textLabelForPoNumber	(this, "PO Number:",	1, 2);
-	this->addChild("PO Number", &textLabelForPoNumber);
-	Text textLabelForSupplier   (this, "Supplier:",		2, 2);
-	Text textLabelForDuration   (this, "Duration:",		3, 2);
-	Text textLabelForLength     (this, "Cycle Length:",	4, 2);
-	Text textLabelForStartDate  (this, "Start Date:",	5, 2);
+	Text textLabelForPoNumber	("PoNumber",	this, "PO Number:",		1, 2);
+	Text textLabelForSupplier   ("Supplier",	this, "Supplier:",		2, 2);
+	Text textLabelForDuration   ("Duration",	this, "Duration:",		3, 2);
+	Text textLabelForLength     ("Length",		this, "Cycle Length:",	4, 2);
+	Text textLabelForStartDate  ("StartDate",	this, "Start Date:",	5, 2);
 
 	// add text labels to the table for line items
-	Text textLabelForDescription(this, "Description",	7, 2);
-	Text textLabelForCode		(this, "Code",			7, 50);
-	Text textLabelForCost		(this, "Cost",			7, 65);
+	Text textLabelForDescription("Description", this, "Description",	7, 2);
+	Text textLabelForCode		("Code",		this, "Code",			7, 50);
+	Text textLabelForCost		("Cost",		this, "Cost",			7, 65);
 
-	Selection supplierSel(this, 1, 20, 2, textLabelForSupplier.lastCol() + 2);
+	Selection supplierSel("SupplierSelection", this, 1, 20, 2, textLabelForSupplier.lastCol() + 2);
 	supplierSel.populateData(database::select("SELECT name FROM supplier;"),1);
 
-	Selection descriptionSel(this, 1, 30, 8, 2);
+	Selection descriptionSel("DescriptionSelection", this, 1, 30, 8, 2);
 	descriptionSel.populateData(database::select(
 				"SELECT description, code FROM equipment;"
 				), 2);

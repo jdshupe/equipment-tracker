@@ -2,10 +2,7 @@
 #ifndef TEXT_H
 #define TEXT_H
 
-#include <curses.h>
-#include <string>
-#include "div.h"
-#include "element.h"
+#include "../element.h"
 
 class Text : public Element
 {
@@ -14,7 +11,7 @@ class Text : public Element
 		std::string		m_displayedText;
 
 	public:
-		Text(Div* p_div, std::string p_text, int p_y, int p_x, int p_width = 0);
+		Text(std::string name, Div* p_div, std::string p_text, int p_y, int p_x, int p_width = 0);
 
 		void Draw();
 

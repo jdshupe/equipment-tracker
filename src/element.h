@@ -16,7 +16,7 @@ class Element
 		std::string		m_name;
 
 	public:
-		Element(Div* div, int height, int width, int yPos, int xPos);
+		Element(std::string name, Div* div, int height, int width, int yPos, int xPos);
 
 		int		height()			{ return m_height; }
 		void	height(int height)	{ m_height = height; }

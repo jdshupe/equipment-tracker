@@ -16,8 +16,8 @@
  * @param height/width the number of lines/columns the selection display will use
  * @param yPos/xPos the coordinates of the top left corner of the selection box
  */
-Selection::Selection(Div* div, int height, int width, int yPos, int xPos)
-: Element(div, height, width, yPos, xPos)
+Selection::Selection(std::string name, Div* div, int height, int width, int yPos, int xPos)
+: Element(name, div, height, width, yPos, xPos)
 {
 	m_selectedOption = 1;
 };

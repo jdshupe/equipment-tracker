@@ -4,10 +4,10 @@
 
 #include <algorithm>
 #include <cctype>
-#include "element.h"
+#include "../element.h"
 #include <vector>
 #include <string>
-#include "connection.h"
+#include "../connection.h"
 
 class Selection : public Element
 {
@@ -22,7 +22,7 @@ class Selection : public Element
 		WINDOW* createWindow();
 
 	public:
-		Selection(Div* div, int height, int width, int yPos, int xPos);
+		Selection(std::string name, Div* div, int height, int width, int yPos, int xPos);
 
 		void makeSelection();
 

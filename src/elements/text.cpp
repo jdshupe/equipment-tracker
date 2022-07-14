@@ -2,12 +2,11 @@
 #include "text.h"
 
 // TODO(ADD FUNCTIONALITY) add a width to the text box and make it so text scrolls if it goes over
-// TODO(ADD FUNCTIONALITY) create input method that records and displays input text
 
 using namespace std;
 
-Text::Text(Div* _div, string _text, int _y, int _x, int p_width)
-: Element(_div, 1, p_width, _y, _x)
+Text::Text(std::string name, Div* _div, string _text, int _y, int _x, int p_width)
+: Element(name, _div, 1, p_width, _y, _x)
 {
 	m_text = _text;
 	p_width == 0 ? m_width = m_text.length() : m_width = p_width;
@@ -29,6 +28,4 @@ std::string Text::getData()
 	mvwgetstr(m_div->win(), m_yPos, lastCol() + 1, value);
 	return std::string(value);
 }
-
-
 

@@ -1,10 +1,10 @@
 // newRental.h
 #ifndef NEWRENTAL_H
 #define NEWRENTAL_H
-#include "../div.h"
-#include "../text.h"
 #include "../connection.h"
-#include "../selection.h"
+#include "../div.h"
+#include "../elements/selection.h"
+#include "../elements/text.h"
 
 class Div;
 class NewRental : public Div
