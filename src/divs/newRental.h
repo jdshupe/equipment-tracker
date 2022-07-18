@@ -10,6 +10,7 @@ class Div;
 class NewRental : public Div
 {
 	private:
+		void getData();
 		void addElements();
 
 	public:
