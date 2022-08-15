@@ -16,6 +16,7 @@ class NewRental : public Div
 	public:
 		NewRental(std::string name, int yPos, int xPos, int height, int width);
 		NewRental(std::string name, int height, int width);
+		void handleInput(int ch);
 };
 
 #endif

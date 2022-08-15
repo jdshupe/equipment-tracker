@@ -30,6 +30,11 @@ class Element
 
 		std::string name()					{ return m_name; }
 		void		name(std::string name)	{ m_name = name; }
+
+		// virtual method for table derived class
+		virtual void rowDown(){};
+		virtual void rowUp(){};
+		virtual void render(){};
 };
 
 #endif

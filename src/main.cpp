@@ -9,6 +9,7 @@
 using namespace std;
 
 /* declarations */
+extern int ch;
 int ch;
 
 Div* activeWindow;
@@ -54,7 +55,12 @@ int main()
 	/* main loop */
 	while((ch = getch()) != KEY_F(1))
 	{
-		if ( activeWindow == &header_win )
+		activeWindow->handleInput(ch);
+		/**TODO (refactor) update the input loop to sit inside the div class. This will
+		 * then only have to call to the class input function based on what window is
+		 * active. Should be able to do something like activeWindow->input().
+		 */
+		/*if (activeWindow == &header_win)
 		{
 			switch(ch)
 			{
@@ -74,16 +80,12 @@ int main()
 					Text key_bind_2("KeyBinds", &footer_win, 
 						"F1:Cancel  F2:Add Monthly Line  F3:Add One Time Fee", 1, 2);
 					NewRental rentalWindow("New Rental", 20, 60);
-					activeWindow = &header_win;
-					header_win.render();
-					header_table.render();
-					header_table.refreshData();
-					footer_win.render();
+					activeWindow = &rentalWindow;
 					break;
 			}
 		} else {
-		}
-	};
+		}*/
+	}
 
 	endwin();
 	return 0;
@@ -116,4 +118,3 @@ void setColors()
 	init_pair(3, 8, COLOR_WHITE);
 	init_pair(4, COLOR_GREEN, COLOR_WHITE);
 }
-

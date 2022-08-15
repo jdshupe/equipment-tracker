@@ -11,5 +11,5 @@ Element::Element(std::string name, Div* div, int height, int width, int yPos, in
 	m_xPos		= xPos;
 	m_hidden	= hidden;
 
-	if (!m_hidden) m_div->addChild(m_name, this);
+	if (!m_hidden) m_div->addChild(this);
 };

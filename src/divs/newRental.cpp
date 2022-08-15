@@ -23,6 +23,7 @@ NewRental::NewRental(std::string name, int height, int width)
 	: Div(name, height, width)
 {
 	addElements();
+	//activeWindow = &this;
 }
 
 /*
@@ -78,6 +79,14 @@ void NewRental::addElements()
 	descriptionSel.populateData(database::select(
 				"SELECT description, code FROM equipment;"
 				), 2);
-	getch();
+	//getch();
 }
 
+
+void NewRental::handleInput(int ch)
+{
+	switch(ch)
+	{
+
+	}
+}

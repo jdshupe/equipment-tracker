@@ -58,9 +58,42 @@ void Div::destroy_win()
 	delwin(m_window);
 }
 
-void Div::addChild(std::string name, Element* elementToAdd)
+void Div::addChild(Element* elementToAdd)
 {
-	elementToAdd->name(name);
 	m_children.push_back(elementToAdd);
 }
 
+
+void Div::handleInput(int ch)
+{
+	switch(ch)
+	{
+		case KEY_DOWN:
+		case 'j':
+			child("MainTable")->rowDown();
+			child("MainTable")->render();
+			break;
+		case KEY_UP:
+		case 'k':
+			child("MainTable")->rowUp();
+			child("MainTable")->render();
+			break;
+	/*	case 'N':
+			NewRental rentalWindow("New Rental", 20, 60);
+			activeWindow = &rentalWindow;
+			break;*/
+	}
+}
+
+
+Element* Div::child(std::string name)
+{
+	for (int i = 0; i < m_children.size(); i++)
+	{
+		if (m_children[i]->name() == name)
+		{
+			return m_children[i];
+		} else {
+		}
+	}
+}
