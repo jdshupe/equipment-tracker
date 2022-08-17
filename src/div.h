@@ -6,9 +6,9 @@
 #include <curses.h>
 #include <vector>
 #include "element.h"
-//#include "divs/newRental.h"
 
 class Element;
+class Text;
 class Div
 {
 	protected:
@@ -51,7 +51,7 @@ class Div
 
 		void addChild(Element* elementToAdd);
 
-		void handleInput(int ch);
+		virtual void handleInput(int ch){};
 
 		Element* child(std::string name);
 };

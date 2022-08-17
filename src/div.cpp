@@ -1,5 +1,6 @@
 // div.cpp
 #include "div.h"
+#include <iostream>
 
 using namespace std;
 
@@ -63,37 +64,7 @@ void Div::addChild(Element* elementToAdd)
 	m_children.push_back(elementToAdd);
 }
 
-
-void Div::handleInput(int ch)
-{
-	switch(ch)
-	{
-		case KEY_DOWN:
-		case 'j':
-			child("MainTable")->rowDown();
-			child("MainTable")->render();
-			break;
-		case KEY_UP:
-		case 'k':
-			child("MainTable")->rowUp();
-			child("MainTable")->render();
-			break;
-	/*	case 'N':
-			NewRental rentalWindow("New Rental", 20, 60);
-			activeWindow = &rentalWindow;
-			break;*/
-	}
-}
-
-
+//TODO this function is to find a child of a div by its name. For some reason, this no work.
 Element* Div::child(std::string name)
 {
-	for (int i = 0; i < m_children.size(); i++)
-	{
-		if (m_children[i]->name() == name)
-		{
-			return m_children[i];
-		} else {
-		}
-	}
 }

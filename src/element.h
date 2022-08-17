@@ -5,6 +5,7 @@
 #include <curses.h>
 #include "div.h"
 #include <string>
+#include <iostream>
 
 class Div;
 class Element
@@ -30,6 +31,15 @@ class Element
 
 		std::string name()					{ return m_name; }
 		void		name(std::string name)	{ m_name = name; }
+
+		void print()
+		{
+			std::cout << m_width << std::endl;
+			std::cout << m_height << std::endl;
+			std::cout << m_xPos << m_yPos << std::endl;
+			std::cout << m_name << std::endl;
+		}
+
 
 		// virtual method for table derived class
 		virtual void rowDown(){};

@@ -16,7 +16,6 @@ class Table : public Element
 	private:
 		int									m_selectedRow;
 		int									m_dataRows;
-		std::string							m_headers;
 		std::string							m_query;
 		std::vector<int>					m_widths;
 		std::vector<std::vector<Cell*>>		m_cellMatrix;
@@ -34,6 +33,7 @@ class Table : public Element
 		void createColumnWidths(std::string value);
 
 	public:
+		std::string							m_headers;
 		Table(std::string name, Div* div, int height, int width, int yPos, int xPos,
 				std::string headers, std::string widths = "none", bool hidden = false);
 
