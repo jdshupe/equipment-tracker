@@ -39,12 +39,6 @@ int main()
 	while((ch = getch()) != KEY_F(1))
 	{
 		activeWindow->handleInput(ch);
-				/*case 'N':
-					Text key_bind_2("KeyBinds", &footer_win, 
-						"F1:Cancel  F2:Add Monthly Line  F3:Add One Time Fee", 1, 2);
-					NewRental rentalWindow("New Rental", 20, 60);
-					activeWindow = &rentalWindow;
-					break;*/
 	}
 
 	endwin();

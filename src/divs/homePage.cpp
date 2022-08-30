@@ -21,8 +21,8 @@ void HomePage::addElements()
 	// add table to div
 	std::string headers = "PO Number,Description,Price,Start Date,End Date ";
 	std::string widths = "14,50,10,11,11";
-	Table header_table("Main", this, LINES-6, COLS-2, 1, 1, headers, widths);
-	header_table.query("\
+	Table* header_table = new Table("Main", this, LINES-6, COLS-2, 1, 1, headers, widths);
+	header_table->query("\
 			SELECT \
 				o.number as \"PO Number\",\
 				e.description as \"Description\",\
@@ -33,7 +33,7 @@ void HomePage::addElements()
 			JOIN purchase_order_details od on od.purchase_order_id = o.id \
 			JOIN equipment e on od.equipment_id = e.id \
 				WHERE e.is_equipment");
-	header_table.refreshData();
+	header_table->refreshData();
 
 	wrefresh(win());
 }
@@ -44,14 +44,16 @@ void HomePage::handleInput(int ch)
 	{
 		case KEY_DOWN:
 		case 'j':
-			std::cout << m_children[0]->m_headers << std::endl;
+			child("Main")->rowDown();
 			break;
 		case KEY_UP:
 		case 'k':
+			child("Main")->rowUp();
 			break;
 		case 'n':
-			NewRental rentalWindow("New Rental", 20, 60);
-			activeWindow = &rentalWindow;
-			break;
+			NewRental* rentalWindow = new NewRental("New Rental", 20, 60);
+			activeWindow = rentalWindow;
+			echo();
+			rentalWindow->handleInput(1);
 	}
 }

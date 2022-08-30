@@ -19,6 +19,7 @@ class Element
 
 	public:
 		Element(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden = false);
+		std::string m_headers;
 
 		int		height()			{ return m_height; }
 		void	height(int height)	{ m_height = height; }
@@ -45,6 +46,12 @@ class Element
 		virtual void rowDown(){};
 		virtual void rowUp(){};
 		virtual void render(){};
+
+		// virtual method for text derived class
+		virtual std::string getData(){return "Not a derived Member";};
+
+		// virtual method for selection derived class
+		virtual void makeSelection(){};
 };
 
 #endif

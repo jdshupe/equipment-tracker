@@ -21,11 +21,14 @@ void Text::Draw()
 	wrefresh(m_div->win());
 };
 
-
 std::string Text::getData()
 {
+	echo();
+	wattron(m_div->win(), COLOR_PAIR(1));
 	char value[80];
 	mvwgetstr(m_div->win(), m_yPos, lastCol() + 1, value);
+	noecho();
+	wattroff(m_div->win(), COLOR_PAIR(1));
 	return std::string(value);
 }
 

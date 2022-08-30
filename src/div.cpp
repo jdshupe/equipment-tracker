@@ -67,4 +67,11 @@ void Div::addChild(Element* elementToAdd)
 //TODO this function is to find a child of a div by its name. For some reason, this no work.
 Element* Div::child(std::string name)
 {
+	for (Element* child : m_children)
+	{
+		if (child->name() == name)
+		{
+			return child;
+		}
+	}
 }

@@ -24,7 +24,7 @@ class Selection : public Element
 	public:
 		Selection(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden = false);
 
-		void makeSelection();
+		std::string getData();
 
 		void populateData(std::string data, int xDim);
 

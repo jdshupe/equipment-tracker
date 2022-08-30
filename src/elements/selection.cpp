@@ -29,7 +29,7 @@ Selection::Selection(std::string name, Div* div, int height, int width, int yPos
  * Currently has bindings for moving up and down the list, taking input of text
  * and making calls to update the data list, and handles the delete options.
  */
-void Selection::makeSelection()
+std::string Selection::getData()
 {
 	wchar_t ch;
 
@@ -74,7 +74,6 @@ void Selection::makeSelection()
 					updateOptions();
 				};
 				break;
-// TODO either make the display size constant or add scrolling (constant will be easier)
 			// these 2 cases handle navigating the displayed list of options
 			case KEY_UP:
 				rowUp();
@@ -105,7 +104,8 @@ void Selection::makeSelection()
 	mvwprintw(m_div->win(), m_yPos, m_xPos, "%s",
 			m_displayedList[m_selectedOption-1][0].c_str());
 	
-	echo();
+	noecho();
+	return m_displayedList[m_selectedOption-1][0].c_str();
 }
 
 

@@ -60,11 +60,11 @@ void NewRental::addElements()
 {
 	// add text labels to the top section of the form. This is for info about 
 	// the rental as a whole
-	Text textLabelForPoNumber	("PoNumber",	this,	"PO Number:",		1, 2);
-	Text textLabelForSupplier   ("Supplier",	this,	"Supplier:",		2, 2,	true);
-	Text textLabelForDuration   ("Duration",	this,	"Duration:",		3, 2);
-	Text textLabelForLength     ("Length",		this,	"Cycle Length:",	4, 2);
-	Text textLabelForStartDate  ("StartDate",	this,	"Start Date:",		5, 2);
+	Text* textLabelForPoNumber	= new Text("PoNumber",	this,	"PO Number:",		1, 2);
+	Text* textLabelForSupplier	= new Text("Supplier",	this,	"Supplier:",		2, 2,	true);
+	Text* textLabelForDuration	= new Text("Duration",	this,	"Duration:",		3, 2);
+	Text* textLabelForLength	= new Text("Length",	this,	"Cycle Length:",	4, 2);
+	Text* textLabelForStartDate = new Text("StartDate",	this,	"Start Date:",		5, 2);
 
 	// add text labels to the table for line items
 	Text textLabelForDescription("Description", this,	"Description",		7, 3,	true);
@@ -72,21 +72,33 @@ void NewRental::addElements()
 	Text textLabelForCost		("Cost",		this,	"Cost",				7, 35,	true);
 	Text numberLabelForRow		("RowOne",		this,	"1.",				8, 1,	true);
 
-	Selection supplierSel("SupplierSelection", this, 1, 20, 2, textLabelForSupplier.lastCol() + 1);
-	supplierSel.populateData(database::select("SELECT name FROM supplier;"),1);
+	Selection* supplierSel = new Selection("SupplierSelection", this, 1, 20, 2,
+			textLabelForSupplier->lastCol() + 1);
+
+	supplierSel->populateData(database::select("SELECT name FROM supplier;"),1);
 
 	Selection descriptionSel("DescriptionSelection", this, 1, 30, 8, 3);
 	descriptionSel.populateData(database::select(
 				"SELECT description, code FROM equipment;"
 				), 2);
-	//getch();
+}
+
+
+void NewRental::addLine(bool repeatable)
+{
+	Text numberLabelForRow	("RowTwo", this, "2.", 9, 1, true);
 }
 
 
 void NewRental::handleInput(int ch)
 {
-	switch(ch)
+	switch (ch)
 	{
-
+		case  KEY_F(2):
+			addLine(true);
+			break;
+		default:
+			m_children[0]->getData();
+			break;
 	}
 }
