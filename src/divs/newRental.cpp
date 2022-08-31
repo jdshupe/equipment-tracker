@@ -70,7 +70,10 @@ void NewRental::handleInput(int ch)
 			addLine(true);
 			break;
 		case 10:
+			m_children[selectedChild]->Draw();
 			m_children[selectedChild]->getData();
+			nextChild();
+			m_children[selectedChild]->highlight();
 			break;
 		case KEY_DOWN:
 		case 'j':
