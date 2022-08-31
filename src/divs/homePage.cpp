@@ -53,7 +53,5 @@ void HomePage::handleInput(int ch)
 		case 'n':
 			NewRental* rentalWindow = new NewRental("New Rental", 20, 60);
 			activeWindow = rentalWindow;
-			echo();
-			rentalWindow->handleInput(1);
 	}
 }

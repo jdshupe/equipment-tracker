@@ -54,6 +54,10 @@ class Div
 		virtual void handleInput(int ch){};
 
 		Element* child(std::string name);
+
+		// virtual functions for the newRental div
+		virtual void nextChild(){};
+		virtual void previousChild(){};
 };
 
 #endif

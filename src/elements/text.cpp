@@ -32,3 +32,11 @@ std::string Text::getData()
 	return std::string(value);
 }
 
+
+int Text::highlight()
+{
+	wattron(m_div->win(), COLOR_PAIR(5));
+	Draw();
+	wattroff(m_div->win(), COLOR_PAIR(5));
+	return 1;
+}

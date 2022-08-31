@@ -13,12 +13,18 @@ class NewRental : public Div
 		void getData();
 		void addElements();
 
+		int selectedChild = 0;
+
 	public:
 		NewRental(std::string name, int yPos, int xPos, int height, int width);
 		NewRental(std::string name, int height, int width);
+
 		void handleInput(int ch);
 
 		void addLine(bool repeatable = false);
+
+		void nextChild();
+		void previousChild();
 };
 
 #endif

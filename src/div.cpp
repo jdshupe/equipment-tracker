@@ -64,7 +64,6 @@ void Div::addChild(Element* elementToAdd)
 	m_children.push_back(elementToAdd);
 }
 
-//TODO this function is to find a child of a div by its name. For some reason, this no work.
 Element* Div::child(std::string name)
 {
 	for (Element* child : m_children)
@@ -75,3 +74,4 @@ Element* Div::child(std::string name)
 		}
 	}
 }
+

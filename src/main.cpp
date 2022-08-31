@@ -71,4 +71,5 @@ void setColors()
 	init_pair(2, 8, -1);
 	init_pair(3, 8, COLOR_WHITE);
 	init_pair(4, COLOR_GREEN, COLOR_WHITE);
+	init_pair(5, COLOR_BLACK, COLOR_WHITE);
 }

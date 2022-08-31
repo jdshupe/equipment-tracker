@@ -41,6 +41,7 @@ class Element
 			std::cout << m_name << std::endl;
 		}
 
+		virtual void Draw(){};
 
 		// virtual method for table derived class
 		virtual void rowDown(){};
@@ -49,6 +50,7 @@ class Element
 
 		// virtual method for text derived class
 		virtual std::string getData(){return "Not a derived Member";};
+		virtual int			highlight(){return 0;};
 
 		// virtual method for selection derived class
 		virtual void makeSelection(){};
