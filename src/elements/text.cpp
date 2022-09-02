@@ -23,16 +23,27 @@ void Text::Draw()
 
 std::string Text::getData()
 {
+	// echo input and turn on cursor
 	echo();
+	curs_set(1);
+
+	// turn to green on black color
 	wattron(m_div->win(), COLOR_PAIR(1));
+
 	char value[80];
 	mvwgetstr(m_div->win(), m_yPos, lastCol() + 1, value);
-	noecho();
+
+	// turn to white on black color
 	wattroff(m_div->win(), COLOR_PAIR(1));
+	// turn off echo and cursor
+	curs_set(0);
+	noecho();
+
 	return std::string(value);
 }
 
 
+// change to black on white and redraw
 int Text::highlight()
 {
 	wattron(m_div->win(), COLOR_PAIR(5));

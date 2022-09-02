@@ -19,8 +19,15 @@
 Selection::Selection(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden)
 : Element(name, div, height, width, yPos, xPos, hidden)
 {
-	m_selectedOption = 1;
-};
+	drawLabel();
+}
+
+
+
+void Selection::Draw()
+{
+	m_textLabel->Draw();
+}
 
 
 /**
@@ -208,3 +215,11 @@ std::string Selection::toLowerCase(std::string string) {
 	std::transform(string.begin(), string.end(), string.begin(), ::tolower );
 	return string;
 }
+
+
+int Selection::highlight()
+{
+	m_textLabel->highlight();
+	return 1;
+}
+
