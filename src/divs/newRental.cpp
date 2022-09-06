@@ -27,13 +27,19 @@ NewRental::NewRental(std::string name, int height, int width)
 }
 
 
+/**
+ * This method is called upon creation of the class. It handles adding all the
+ * elements to the div. This currently also handles the queries for selections.
+ * This process may be moved in the future to minimize the delay when initially
+ * drawing.
+ */
 void NewRental::addElements()
 {
 	// add text labels to the top section of the form. This is for info about 
 	// the rental as a whole
 	Text* textLabelForPoNumber	= new Text("PoNumber",	this,	"PO Number:",		1, 2);
 	textLabelForPoNumber->highlight();
-	Selection* supplierSel = new Selection("Supplier", this, 1, 20, 2, 2);
+	Selection* supplierSel = new Selection("Supplier", "Supplier:", this, 1, 20, 2, 2);
 
 	Text* textLabelForDuration	= new Text("Duration",	this,	"Duration:",		3, 2);
 	Text* textLabelForLength	= new Text("Length",	this,	"Cycle Length:",	4, 2);
@@ -41,26 +47,42 @@ void NewRental::addElements()
 
 	// add text labels to the table for line items
 	Text textLabelForDescription("Description", this,	"Description",		7, 3,	true);
-	Text textLabelForCode		("Code",		this,	"Code",				7, 30,	true);
 	Text textLabelForCost		("Cost",		this,	"Cost",				7, 35,	true);
-	Text numberLabelForRow		("RowOne",		this,	"1.",				8, 1,	true);
 
-	//Selection descriptionSel("DescriptionSelection", this, 1, 30, 8, 3, true);
-
+	Selection* descriptionSel = new Selection("Repeat1", "1.", this, 1, 30, 8, 1);
 
 	supplierSel->populateData(database::select("SELECT name FROM supplier;"),1);
-	/*descriptionSel.populateData(database::select(
+	descriptionSel->populateData(database::select(
 				"SELECT description, code FROM equipment;"
-				), 2);*/
+				), 2);
 }
 
 
+/**
+ * adds costing lines to the screen.
+ *
+ * @param bool repeatable if true the charge added is repeatable and is handled
+ * appropriately. 
+ */
 void NewRental::addLine(bool repeatable)
 {
-	Text numberLabelForRow	("RowTwo", this, "2.", 9, 1, true);
+	new Selection("Repeat2", "2.", this, 1, 30, 9, 1);
+	child("Repeat2")->populateData(database::select(
+				"SELECT description, code FROM equipment;"
+				), 2);
 }
 
 
+/**
+ * called from the main loop to catch key inputs. This currently is set up to
+ * handle the following inputs
+ *
+ * @key F2			add repeatable line
+ * @key ENTER		get data for the currently selected input item, calls the
+ *					"getData" method for the appropriate element
+ * @key (Up/Down Arrows)/(j/k) 
+ *					navigate the list of data elements, uses the following 2 methods.
+ */
 void NewRental::handleInput(int ch)
 {
 	switch (ch)
@@ -103,7 +125,6 @@ void NewRental::nextChild()
 		selectedChild++;
 	}
 }
-
 void NewRental::previousChild()
 {
 	if (selectedChild == 0)

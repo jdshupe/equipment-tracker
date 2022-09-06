@@ -13,24 +13,26 @@
 class Selection : public Element
 {
 	private:
-		std::vector<std::vector<std::string>>	m_dataList;
-		std::vector<std::vector<std::string>>	m_displayedList;
-		std::string								m_value;
-		WINDOW*									m_optionsWindow;
-		int										m_selectedOption = 1;
-		std::string								m_query;
-		Text*									m_textLabel;
+		std::vector<std::vector<std::string>>	m_dataList;			// list of all data returned by the query
+		std::vector<std::vector<std::string>>	m_displayedList;	// list of values that match current filter
+
+		std::string		m_value;				// selected data value
+		WINDOW*			m_optionsWindow;		// the window the filtered options are displayed in
+		int				m_selectedOption = 1;	// initializes the selected option as the first one.
+		std::string		m_query;				// the query used to populate the data
+		Text*			m_textLabel;			// text label for the selection
+		int				m_inputXPos;			// where text input begins. The label length.
 
 		WINDOW* createWindow();
 
 
 	public:
-		Selection(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden = false);
+		Selection(std::string name, std::string labelText,  Div* div, int height, int width, int yPos, int xPos, bool hidden = false);
 
-		void drawLabel()
+		void drawLabel(std::string text)
 		{
-			m_textLabel = new Text("Selection Label", m_div, m_name.append(":") , m_yPos,
-					m_xPos, true, m_name.length());
+			m_textLabel = new Text("Selection Label", m_div, text, m_yPos,
+					m_xPos, true, text.length());
 		}
 
 		std::string getData();

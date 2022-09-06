@@ -16,10 +16,11 @@
  * @param height/width the number of lines/columns the selection display will use
  * @param yPos/xPos the coordinates of the top left corner of the selection box
  */
-Selection::Selection(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden)
+Selection::Selection(std::string name, std::string labelText, Div* div, int height, int width, int yPos, int xPos, bool hidden)
 : Element(name, div, height, width, yPos, xPos, hidden)
 {
-	drawLabel();
+	m_inputXPos = labelText.length() + xPos + 1;
+	drawLabel(labelText);
 }
 
 
@@ -40,11 +41,12 @@ std::string Selection::getData()
 {
 	wchar_t ch;
 
-	noecho();												// turn off input echo
-	curs_set(1);											// make cursor visible
-	keypad(m_div->win(), TRUE);								// enable keypad input for parent div
-	wmove(m_div->win(), m_yPos, m_xPos + m_name.length());	// move cursor to starting location
-	m_optionsWindow = createWindow();						// creates the dropdown window
+	curs_set(1);									// make cursor visible
+	keypad(m_div->win(), TRUE);						// enable keypad input for parent div
+
+	wmove(m_div->win(), m_yPos, m_inputXPos + m_value.length());		// move cursor to starting location
+	
+	m_optionsWindow = createWindow();				// creates the dropdown window
 
 	/**
 	 * While loop to handle input
@@ -75,8 +77,8 @@ std::string Selection::getData()
 					displayValue.append(m_width - m_value.length(), ' ');
 
 					// prints the updated value and moves the cursor one space
-					mvwprintw(m_div->win(), m_yPos, m_xPos + m_name.length(), "%s", displayValue.c_str());
-					wmove(m_div->win(), m_yPos, m_xPos + m_name.length() + m_value.length());
+					mvwprintw(m_div->win(), m_yPos, m_inputXPos, "%s", displayValue.c_str());
+					wmove(m_div->win(), m_yPos, m_inputXPos + m_value.length());
 
 					updateOptions();
 				};
@@ -96,7 +98,7 @@ std::string Selection::getData()
 			default:
 				m_value += (ch); // add typed character to selection value
 				updateOptions();
-				mvwprintw(m_div->win(), m_yPos, m_xPos + m_name.length(), "%s", m_value.c_str());
+				mvwprintw(m_div->win(), m_yPos, m_inputXPos, "%s", m_value.c_str());
 				break;
 		}	
 	}
@@ -105,15 +107,17 @@ std::string Selection::getData()
 	 * printing it, removing the selection window, and passing the values
 	 * associated to the rest of the form
 	 */
+	m_value = m_displayedList[m_selectedOption-1][0];
+
 	wclear(m_optionsWindow);
 	wrefresh(m_optionsWindow);
 	delwin(m_optionsWindow);
+	curs_set(0);									// hide cursor
+
 	redrawwin(m_div->win());
-	mvwprintw(m_div->win(), m_yPos, m_xPos + m_name.length(), "%s",
-			m_displayedList[m_selectedOption-1][0].c_str());
+	mvwprintw(m_div->win(), m_yPos, m_inputXPos, "%s", m_value.c_str());
 	
-	noecho();
-	return m_displayedList[m_selectedOption-1][0].c_str();
+	return m_value.c_str();
 }
 
 
@@ -166,7 +170,7 @@ WINDOW* Selection::createWindow()
 {
 	WINDOW* local_win;
 
-	local_win = newwin(5, m_width, m_yPos + 1 + m_div->yPos(), m_xPos + m_div->xPos() + m_name.length());
+	local_win = newwin(5, m_width, m_yPos + 1 + m_div->yPos(), m_inputXPos + m_div->xPos());
 
 	return local_win;
 }
