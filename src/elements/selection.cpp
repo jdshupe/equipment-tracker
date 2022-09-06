@@ -40,11 +40,11 @@ std::string Selection::getData()
 {
 	wchar_t ch;
 
-	noecho();								// turn off input echo
-	curs_set(1);							// make cursor visible
-	keypad(m_div->win(), TRUE);				// enable keypad input for parent div
-	wmove(m_div->win(), m_yPos, m_xPos);	// move cursor to starting location
-	m_optionsWindow = createWindow();		// creates the dropdown window
+	noecho();												// turn off input echo
+	curs_set(1);											// make cursor visible
+	keypad(m_div->win(), TRUE);								// enable keypad input for parent div
+	wmove(m_div->win(), m_yPos, m_xPos + m_name.length());	// move cursor to starting location
+	m_optionsWindow = createWindow();						// creates the dropdown window
 
 	/**
 	 * While loop to handle input
@@ -75,8 +75,8 @@ std::string Selection::getData()
 					displayValue.append(m_width - m_value.length(), ' ');
 
 					// prints the updated value and moves the cursor one space
-					mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", displayValue.c_str());
-					wmove(m_div->win(), m_yPos, m_xPos + m_value.length());
+					mvwprintw(m_div->win(), m_yPos, m_xPos + m_name.length(), "%s", displayValue.c_str());
+					wmove(m_div->win(), m_yPos, m_xPos + m_name.length() + m_value.length());
 
 					updateOptions();
 				};
@@ -96,7 +96,7 @@ std::string Selection::getData()
 			default:
 				m_value += (ch); // add typed character to selection value
 				updateOptions();
-				mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", m_value.c_str());
+				mvwprintw(m_div->win(), m_yPos, m_xPos + m_name.length(), "%s", m_value.c_str());
 				break;
 		}	
 	}
@@ -108,7 +108,8 @@ std::string Selection::getData()
 	wclear(m_optionsWindow);
 	wrefresh(m_optionsWindow);
 	delwin(m_optionsWindow);
-	mvwprintw(m_div->win(), m_yPos, m_xPos, "%s",
+	redrawwin(m_div->win());
+	mvwprintw(m_div->win(), m_yPos, m_xPos + m_name.length(), "%s",
 			m_displayedList[m_selectedOption-1][0].c_str());
 	
 	noecho();
@@ -165,7 +166,7 @@ WINDOW* Selection::createWindow()
 {
 	WINDOW* local_win;
 
-	local_win = newwin(5, m_width, m_yPos + 1 + m_div->yPos(), m_xPos + m_div->xPos());
+	local_win = newwin(5, m_width, m_yPos + 1 + m_div->yPos(), m_xPos + m_div->xPos() + m_name.length());
 
 	return local_win;
 }

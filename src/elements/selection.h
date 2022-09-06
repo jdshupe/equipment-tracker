@@ -29,8 +29,8 @@ class Selection : public Element
 
 		void drawLabel()
 		{
-			m_textLabel = new Text("Selection Label", m_div, m_name, m_yPos,
-					m_xPos - m_name.length(), true, m_name.length());
+			m_textLabel = new Text("Selection Label", m_div, m_name.append(":") , m_yPos,
+					m_xPos, true, m_name.length());
 		}
 
 		std::string getData();
