@@ -2,14 +2,12 @@
 #ifndef TABLE_H
 #define TABLE_H
 
-#include "cell.h"
-#include "connection.h"
-#include <string>
-#include <curses.h>
+#include <algorithm>
+#include "../cell.h"
+#include "../connection.h"
+#include "../element.h"
 #include <iostream>
 #include <vector>
-#include "element.h"
-#include <algorithm>
 
 class Cell;
 class Element;
@@ -18,7 +16,6 @@ class Table : public Element
 	private:
 		int									m_selectedRow;
 		int									m_dataRows;
-		std::string							m_headers;
 		std::string							m_query;
 		std::vector<int>					m_widths;
 		std::vector<std::vector<Cell*>>		m_cellMatrix;
@@ -36,7 +33,9 @@ class Table : public Element
 		void createColumnWidths(std::string value);
 
 	public:
-		Table(Div* div, int height, int width, int yPos, int xPos, std::string headers, std::string widths = "none");
+		std::string							m_headers;
+		Table(std::string name, Div* div, int height, int width, int yPos, int xPos,
+				std::string headers, std::string widths = "none", bool hidden = false);
 
 		void render();
 

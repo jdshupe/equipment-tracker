@@ -2,9 +2,10 @@
 #include <curses.h>
 #include "div.h"
 #include "divs/newRental.h"
-#include "text.h"
-#include "table.h"
+#include "divs/homePage.h"
 #include <string>
+#include "elements/table.h"
+#include "elements/text.h"
 
 using namespace std;
 
@@ -23,31 +24,12 @@ int main()
 	startCurses();
 
 	/* create windows */
-	Div header_win("Rentals", 0, 0, LINES - 3, COLS);
+	HomePage header_win("Rentals", 0, 0, LINES - 3, COLS);
 	activeWindow = &header_win;
 	Div footer_win("Key Bindings", LINES - 3, 0, 3, COLS);
 
-	Text key_bind_1(&footer_win, "F1:Quit", 1, 2);
-	Text key_bind_2(&footer_win, "N:New Rental", 1, key_bind_1.lastCol() + 2);
-	Text key_bind_3(&footer_win, "F:Filter", 1, key_bind_2.lastCol() + 2);
-	Text key_bind_4(&footer_win, "E:Extend", 1, key_bind_3.lastCol() + 2);
-
-	string headers = "PO Number,Description,Price,Start Date,End Date ";
-	string widths = "14,50,10,11,11";
-
-	Table header_table(&header_win, LINES-6, COLS-2, 1, 1,  headers, widths);
-	header_table.query("\
-			SELECT \
-				o.number as \"PO Number\",\
-				e.description as \"Description\",\
-				od.unit_cost as \"Price\",\
-				o.start_date as \"Start Date\",\
-				o.start_date + (o.rental_duration * o.cycle_length) as \"End Date\" \
-			FROM purchase_order o \
-			JOIN purchase_order_details od on od.purchase_order_id = o.id \
-			JOIN equipment e on od.equipment_id = e.id \
-				WHERE e.is_equipment");
-	header_table.refreshData();
+	Text key_bind_1("KeyBinds", &footer_win, 
+			"F1:Quit  N:New Rental  F:Filter  E:Extend", 1, 2);
 
 	wrefresh(header_win.win());
 	wrefresh(footer_win.win());
@@ -56,34 +38,8 @@ int main()
 	/* main loop */
 	while((ch = getch()) != KEY_F(1))
 	{
-		if ( activeWindow == &header_win )
-		{
-			switch(ch)
-			{
-				case KEY_DOWN:
-				case 'j':
-					header_table.rowDown();
-					header_win.render();
-					header_table.render();
-					break;
-				case KEY_UP:
-				case 'k':
-					header_table.rowUp();
-					header_win.render();
-					header_table.render();
-					break;
-				case 'N':
-					NewRental rentalWindow("New Rental", 20, 60);
-					activeWindow = &header_win;
-					header_win.render();
-					header_table.render();
-					header_table.refreshData();
-					footer_win.render();
-					break;
-			}
-		} else {
-		}
-	};
+		activeWindow->handleInput(ch);
+	}
 
 	endwin();
 	return 0;
@@ -115,5 +71,5 @@ void setColors()
 	init_pair(2, 8, -1);
 	init_pair(3, 8, COLOR_WHITE);
 	init_pair(4, COLOR_GREEN, COLOR_WHITE);
+	init_pair(5, COLOR_BLACK, COLOR_WHITE);
 }
-

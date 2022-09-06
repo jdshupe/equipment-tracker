@@ -2,25 +2,26 @@
 #ifndef TEXT_H
 #define TEXT_H
 
-#include <curses.h>
-#include <string>
-#include "div.h"
-#include "element.h"
+#include "../element.h"
 
 class Text : public Element
 {
 	private:
+		std::string		m_value, m_displayedValue;
 		std::string		m_text;
 		std::string		m_displayedText;
 
 	public:
-		Text(Div* p_div, std::string p_text, int p_y, int p_x, int p_width = 0);
+		Text(std::string name, Div* p_div, std::string p_text, int p_y, int p_x, bool hidden = false, int p_width = 0);
 
-		void Draw();
+		void		Draw();
+		std::string getData();
+		int			highlight();
 
 		WINDOW* win() { return m_div->win(); }
 		
 		int lastCol() { return m_width + m_xPos; }
+
 };
 
 #endif

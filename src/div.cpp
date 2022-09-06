@@ -1,5 +1,6 @@
 // div.cpp
 #include "div.h"
+#include <iostream>
 
 using namespace std;
 
@@ -57,3 +58,20 @@ void Div::destroy_win()
 	wrefresh(m_window);
 	delwin(m_window);
 }
+
+void Div::addChild(Element* elementToAdd)
+{
+	m_children.push_back(elementToAdd);
+}
+
+Element* Div::child(std::string name)
+{
+	for (Element* child : m_children)
+	{
+		if (child->name() == name)
+		{
+			return child;
+		}
+	}
+}
+

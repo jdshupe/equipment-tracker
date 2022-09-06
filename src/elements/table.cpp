@@ -16,9 +16,9 @@ using namespace std;
  * @param headers comma separated list containing the header titles
  * @param widths comma separated list of column widths, used to build the table
  */
-Table::Table(Div* div, int height, int width, int yPos, int xPos, string headers,
-		string widths) 
-: Element(div, height, width, yPos, xPos)
+Table::Table(std::string name, Div* div, int height, int width, int yPos, 
+		int xPos, string headers, string widths, bool hidden)
+: Element(name, div, height, width, yPos, xPos, hidden)
 {
 	m_headers		= headers;
 	m_selectedRow	= 1;
@@ -145,6 +145,6 @@ void Table::refreshData()
 	draw();
 }
 
-void Table::rowDown(){ m_selectedRow == m_dataRows ? m_selectedRow = 1 : m_selectedRow++; }
+void Table::rowDown(){ m_selectedRow == m_dataRows ? m_selectedRow = 1 : m_selectedRow++; render(); }
 
-void Table::rowUp(){ m_selectedRow == 1 ? m_selectedRow = m_dataRows : m_selectedRow--; }
+void Table::rowUp(){ m_selectedRow == 1 ? m_selectedRow = m_dataRows : m_selectedRow--; render();}

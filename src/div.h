@@ -1,12 +1,14 @@
 // div.h
 #ifndef DIV_H
 #define DIV_H
+#include <algorithm>
 #include <string>
 #include <curses.h>
 #include <vector>
 #include "element.h"
 
 class Element;
+class Text;
 class Div
 {
 	protected:
@@ -16,7 +18,8 @@ class Div
 		int						m_height;
 		int						m_width;
 		WINDOW*					m_window;
-		std::vector<Element*>	m_elements;
+
+		std::vector<Element*>	m_children;
 
 		WINDOW* createWindow();
 
@@ -24,7 +27,6 @@ class Div
 
 
 	public:
-		//TODO(feature) add constructor that centers the div
 		/// Constructor that takes x/y and width/height
 		Div(std::string name, int yPos, int xPos, int height, int width);
 		Div(std::string name, int height, int width);
@@ -46,6 +48,16 @@ class Div
 		void xPos(int xPos) { m_xPos = xPos; };
 
 		WINDOW* win() { return m_window; };
+
+		void addChild(Element* elementToAdd);
+
+		virtual void handleInput(int ch){};
+
+		Element* child(std::string name);
+
+		// virtual functions for the newRental div
+		virtual void nextChild(){};
+		virtual void previousChild(){};
 };
 
 #endif

@@ -16,11 +16,18 @@
  * @param height/width the number of lines/columns the selection display will use
  * @param yPos/xPos the coordinates of the top left corner of the selection box
  */
-Selection::Selection(Div* div, int height, int width, int yPos, int xPos)
-: Element(div, height, width, yPos, xPos)
+Selection::Selection(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden)
+: Element(name, div, height, width, yPos, xPos, hidden)
 {
-	m_selectedOption = 1;
-};
+	drawLabel();
+}
+
+
+
+void Selection::Draw()
+{
+	m_textLabel->Draw();
+}
 
 
 /**
@@ -29,15 +36,15 @@ Selection::Selection(Div* div, int height, int width, int yPos, int xPos)
  * Currently has bindings for moving up and down the list, taking input of text
  * and making calls to update the data list, and handles the delete options.
  */
-void Selection::makeSelection()
+std::string Selection::getData()
 {
 	wchar_t ch;
 
-	noecho();								// turn off input echo
-	curs_set(1);							// make cursor visible
-	keypad(m_div->win(), TRUE);				// enable keypad input for parent div
-	wmove(m_div->win(), m_yPos, m_xPos);	// move cursor to starting location
-	m_optionsWindow = createWindow();		// creates the dropdown window
+	noecho();												// turn off input echo
+	curs_set(1);											// make cursor visible
+	keypad(m_div->win(), TRUE);								// enable keypad input for parent div
+	wmove(m_div->win(), m_yPos, m_xPos + m_name.length());	// move cursor to starting location
+	m_optionsWindow = createWindow();						// creates the dropdown window
 
 	/**
 	 * While loop to handle input
@@ -68,13 +75,12 @@ void Selection::makeSelection()
 					displayValue.append(m_width - m_value.length(), ' ');
 
 					// prints the updated value and moves the cursor one space
-					mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", displayValue.c_str());
-					wmove(m_div->win(), m_yPos, m_xPos + m_value.length());
+					mvwprintw(m_div->win(), m_yPos, m_xPos + m_name.length(), "%s", displayValue.c_str());
+					wmove(m_div->win(), m_yPos, m_xPos + m_name.length() + m_value.length());
 
 					updateOptions();
 				};
 				break;
-// TODO either make the display size constant or add scrolling (constant will be easier)
 			// these 2 cases handle navigating the displayed list of options
 			case KEY_UP:
 				rowUp();
@@ -90,7 +96,7 @@ void Selection::makeSelection()
 			default:
 				m_value += (ch); // add typed character to selection value
 				updateOptions();
-				mvwprintw(m_div->win(), m_yPos, m_xPos, "%s", m_value.c_str());
+				mvwprintw(m_div->win(), m_yPos, m_xPos + m_name.length(), "%s", m_value.c_str());
 				break;
 		}	
 	}
@@ -102,10 +108,12 @@ void Selection::makeSelection()
 	wclear(m_optionsWindow);
 	wrefresh(m_optionsWindow);
 	delwin(m_optionsWindow);
-	mvwprintw(m_div->win(), m_yPos, m_xPos, "%s",
+	redrawwin(m_div->win());
+	mvwprintw(m_div->win(), m_yPos, m_xPos + m_name.length(), "%s",
 			m_displayedList[m_selectedOption-1][0].c_str());
 	
-	echo();
+	noecho();
+	return m_displayedList[m_selectedOption-1][0].c_str();
 }
 
 
@@ -158,7 +166,7 @@ WINDOW* Selection::createWindow()
 {
 	WINDOW* local_win;
 
-	local_win = newwin(5, m_width, m_yPos + 1 + m_div->yPos(), m_xPos + m_div->xPos());
+	local_win = newwin(5, m_width, m_yPos + 1 + m_div->yPos(), m_xPos + m_div->xPos() + m_name.length());
 
 	return local_win;
 }
@@ -208,3 +216,11 @@ std::string Selection::toLowerCase(std::string string) {
 	std::transform(string.begin(), string.end(), string.begin(), ::tolower );
 	return string;
 }
+
+
+int Selection::highlight()
+{
+	m_textLabel->highlight();
+	return 1;
+}
+

@@ -16,85 +16,100 @@ NewRental::NewRental(std::string name, int yPos, int xPos, int height, int width
 
 
 /**
- * Class constructr, same as above except this will center the window on the
+ * Class constructor, same as above except this will center the window on the
  * screen. No coordinates are needed.
  */
 NewRental::NewRental(std::string name, int height, int width)
 	: Div(name, height, width)
 {
 	addElements();
+	//activeWindow = &this;
 }
+
 
 void NewRental::addElements()
 {
 	// add text labels to the top section of the form. This is for info about 
 	// the rental as a whole
-	Text textLabelForPoNumber	(this, "PO Number:",	1, 2);
-	Text textLabelForSupplier   (this, "Supplier:",		2, 2);
-	Text textLabelForDuration   (this, "Duration:",		3, 2);
-	Text textLabelForLength     (this, "Cycle Length:",	4, 2);
-	Text textLabelForStartDate  (this, "Start Date:",	5, 2);
+	Text* textLabelForPoNumber	= new Text("PoNumber",	this,	"PO Number:",		1, 2);
+	textLabelForPoNumber->highlight();
+	Selection* supplierSel = new Selection("Supplier", this, 1, 20, 2, 2);
+
+	Text* textLabelForDuration	= new Text("Duration",	this,	"Duration:",		3, 2);
+	Text* textLabelForLength	= new Text("Length",	this,	"Cycle Length:",	4, 2);
+	Text* textLabelForStartDate = new Text("StartDate",	this,	"Start Date:",		5, 2);
 
 	// add text labels to the table for line items
-	Text textLabelForDescription(this, "Description",	7, 2);
-	Text textLabelForCode		(this, "Code",			7, 50);
-	Text textLabelForCost		(this, "Cost",			7, 65);
+	Text textLabelForDescription("Description", this,	"Description",		7, 3,	true);
+	Text textLabelForCode		("Code",		this,	"Code",				7, 30,	true);
+	Text textLabelForCost		("Cost",		this,	"Cost",				7, 35,	true);
+	Text numberLabelForRow		("RowOne",		this,	"1.",				8, 1,	true);
 
-	Selection supplierSel(this, 1, 20, 2, textLabelForSupplier.lastCol() + 2);
-	supplierSel.populateData(database::select("SELECT name FROM supplier;"),1);
+	//Selection descriptionSel("DescriptionSelection", this, 1, 30, 8, 3, true);
 
-	Selection descriptionSel(this, 1, 30, 8, 2);
-	descriptionSel.populateData(database::select(
+
+	supplierSel->populateData(database::select("SELECT name FROM supplier;"),1);
+	/*descriptionSel.populateData(database::select(
 				"SELECT description, code FROM equipment;"
-				), 2);
-
-	char s_poNumber[80], s_supplier[80], s_duration[10], s_length[10], s_startDate[80];
-	char s_description[80], s_code[80], s_cost[80];
-
-	echo();
-	curs_set(1);
-
-	// this section is the input navigation of the form, this will be replaced
-	// with transversing an index of element positions
-	mvwgetstr(this->win(), 1, textLabelForPoNumber.lastCol() + 2, s_poNumber);
-	supplierSel.makeSelection();
-	textLabelForLength.Draw();
-	mvwgetstr(this->win(), 3, textLabelForDuration.lastCol() + 2, s_duration);
-	mvwgetstr(this->win(), 4, textLabelForLength.lastCol() + 2, s_length);
-	mvwgetstr(this->win(), 5, textLabelForStartDate.lastCol() + 2, s_startDate);
-
-	std::string sqlNewPO;
-	std::string sqlRentalDetail;
-
-	sqlNewPO = std::string(
-			"INSERT INTO purchase_order (\
-				number,\
-				supplier_id,\
-				rental_duration,\
-				cycle_length)\
-			VALUES (\
-				'") + s_poNumber + std::string("',\
-				(SELECT id FROM supplier WHERE name ='") + s_supplier + std::string("'),")
-				+ s_duration + std::string(",")
-				+ s_length + std::string(");");
-
-	sqlRentalDetail = std::string(
-			"INSERT INTO purchase_order_details("
-				"purchase_order_id,"
-				"equipment_id,"
-				"line_number,"
-				"description)"
-			"VALUES("
-				"(SELECT id FROM purchase_order WHERE number = '") + s_poNumber + std::string("'),"
-					"(SELECT id FROM equipment WHERE code = '");
-
-	descriptionSel.makeSelection();
-
-	noecho();
-	curs_set(0);
-	//database::insert(sqlNewPO);
-	this->destroy_win();
-	clear();
-	refresh();
+				), 2);*/
 }
 
+
+void NewRental::addLine(bool repeatable)
+{
+	Text numberLabelForRow	("RowTwo", this, "2.", 9, 1, true);
+}
+
+
+void NewRental::handleInput(int ch)
+{
+	switch (ch)
+	{
+		case KEY_F(2):
+			addLine(true);
+			break;
+		case 10:
+			m_children[selectedChild]->Draw();
+			m_children[selectedChild]->getData();
+			nextChild();
+			m_children[selectedChild]->highlight();
+			break;
+		case KEY_DOWN:
+		case 'j':
+			m_children[selectedChild]->Draw();
+			nextChild();
+			m_children[selectedChild]->highlight();
+			break;
+		case KEY_UP:
+		case 'k':
+			m_children[selectedChild]->Draw();
+			previousChild();
+			m_children[selectedChild]->highlight();
+			break;
+	}
+}
+
+
+/*
+ * these 2 functions handle cycling through the options on the form. Called from
+ * the handleInput function on the up and down movements
+ */
+void NewRental::nextChild()
+{
+	if (this->selectedChild == (m_children.size() - 1))
+	{
+		selectedChild = 0;
+	} else {
+		selectedChild++;
+	}
+}
+
+void NewRental::previousChild()
+{
+	if (selectedChild == 0)
+	{
+		selectedChild = m_children.size() - 1;
+	} else {
+		selectedChild--;
+	}
+}

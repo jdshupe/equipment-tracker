@@ -1,3 +1,5 @@
 src/*.o
 src/divs/*.o
+src/elements/*.o
 equipmentTracker
+log.txt
