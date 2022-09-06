@@ -23,23 +23,42 @@ void Text::Draw()
 
 std::string Text::getData()
 {
-	// echo input and turn on cursor
-	echo();
+	// inital setup
 	curs_set(1);
+	wattron(m_div->win(), COLOR_PAIR(1)); // turn to green on black color
 
-	// turn to green on black color
-	wattron(m_div->win(), COLOR_PAIR(1));
+	// input handle
+	int ch;
+	while ( (ch = wgetch(m_div->win())) != 10)
+	{
+		switch (ch)
+		{
+			case KEY_BACKSPACE:
+			case KEY_DC:
+			case 127:
+				if (m_value.length() != 0)
+				{
+					m_value.pop_back();
+					m_displayedValue = m_value;
+					m_displayedValue.append(30 - m_value.length(), ' ');
 
-	char value[80];
-	mvwgetstr(m_div->win(), m_yPos, lastCol() + 1, value);
+					mvwprintw(m_div->win(), m_yPos, m_xPos + m_displayedText.length(), 
+							"%s", m_displayedValue.c_str());
+					wmove(m_div->win(), m_yPos, m_xPos + m_displayedText.length() + m_value.length());
+				}
+				break;
+			default:
+				m_value += ch;
+				mvwprintw(m_div->win(), m_yPos, m_xPos + m_text.length(), "%s", m_value.c_str());
+				break;
+		}
+	}
 
-	// turn to white on black color
-	wattroff(m_div->win(), COLOR_PAIR(1));
-	// turn off echo and cursor
+	// turn off input settings
+	wattroff(m_div->win(), COLOR_PAIR(1)); // turn to white on black color
 	curs_set(0);
-	noecho();
 
-	return std::string(value);
+	return std::string(m_value);
 }
 
 

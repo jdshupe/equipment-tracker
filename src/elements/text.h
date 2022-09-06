@@ -7,6 +7,7 @@
 class Text : public Element
 {
 	private:
+		std::string		m_value, m_displayedValue;
 		std::string		m_text;
 		std::string		m_displayedText;
 
