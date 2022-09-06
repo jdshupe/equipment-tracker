@@ -33,10 +33,8 @@ void NewRental::addElements()
 	// the rental as a whole
 	Text* textLabelForPoNumber	= new Text("PoNumber",	this,	"PO Number:",		1, 2);
 	textLabelForPoNumber->highlight();
-	Selection* supplierSel = new Selection("Supplier", this, 1, 20, 2,
-			10);
+	Selection* supplierSel = new Selection("Supplier", this, 1, 20, 2, 2);
 
-	supplierSel->populateData(database::select("SELECT name FROM supplier;"),1);
 	Text* textLabelForDuration	= new Text("Duration",	this,	"Duration:",		3, 2);
 	Text* textLabelForLength	= new Text("Length",	this,	"Cycle Length:",	4, 2);
 	Text* textLabelForStartDate = new Text("StartDate",	this,	"Start Date:",		5, 2);
@@ -47,10 +45,13 @@ void NewRental::addElements()
 	Text textLabelForCost		("Cost",		this,	"Cost",				7, 35,	true);
 	Text numberLabelForRow		("RowOne",		this,	"1.",				8, 1,	true);
 
-	Selection descriptionSel("DescriptionSelection", this, 1, 30, 8, 3, true);
-	descriptionSel.populateData(database::select(
+	//Selection descriptionSel("DescriptionSelection", this, 1, 30, 8, 3, true);
+
+
+	supplierSel->populateData(database::select("SELECT name FROM supplier;"),1);
+	/*descriptionSel.populateData(database::select(
 				"SELECT description, code FROM equipment;"
-				), 2);
+				), 2);*/
 }
 
 
