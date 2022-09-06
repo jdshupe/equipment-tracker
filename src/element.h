@@ -54,6 +54,7 @@ class Element
 
 		// virtual method for selection derived class
 		virtual void makeSelection(){};
+		virtual void populateData(std::string hold1, int hold2){};
 };
 
 #endif
