@@ -14,6 +14,8 @@ class NewRental : public Div
 		void addElements();
 
 		int selectedChild = 0;
+		int oneTimeFeeRows;
+		int monthlyFeeRows;
 
 	public:
 		NewRental(std::string name, int yPos, int xPos, int height, int width);
