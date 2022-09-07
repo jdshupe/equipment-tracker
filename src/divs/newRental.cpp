@@ -49,7 +49,7 @@ void NewRental::addElements()
 	Text textLabelForDescription("Description", this,	"Description",		7, 3,	true);
 	Text textLabelForCost		("Cost",		this,	"Cost",				7, 35,	true);
 
-	Selection* descriptionSel = new Selection("Repeat1", "1.", this, 1, 30, 8, 1);
+	Selection* descriptionSel = new Selection("repeat1", "1.", this, 1, 30, 8, 1);
 
 	supplierSel->populateData(database::select("SELECT name FROM supplier;"),1);
 	descriptionSel->populateData(database::select(
@@ -66,10 +66,23 @@ void NewRental::addElements()
  */
 void NewRental::addLine(bool repeatable)
 {
-	new Selection("Repeat2", "2.", this, 1, 30, 9, 1);
-	child("Repeat2")->populateData(database::select(
-				"SELECT description, code FROM equipment;"
-				), 2);
+	std::string name, label, numberAsString;
+	std::string lastRowName;
+	if (repeatable)
+	{
+		numberAsString = std::to_string(++monthlyFeeRows);
+		name = "repeat";
+		lastRowName = "repeat" + std::to_string(monthlyFeeRows-1);
+	} else {
+		numberAsString = std::to_string(++oneTimeFeeRows);
+		name = "single";
+	}
+
+	new Selection(name + numberAsString, numberAsString + ".", this, 1, 30,
+			child(lastRowName)->y()+1, 1);
+	child(name + numberAsString)->populateData(database::select( "SELECT description, code FROM equipment;"), 2);
+	new Text(name + "Cost" + numberAsString, this, " ", child(name +
+				numberAsString)->y(), 33, false, 7);
 }
 
 

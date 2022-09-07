@@ -11,8 +11,13 @@ class Text : public Element
 		std::string		m_text;
 		std::string		m_displayedText;
 
+		int		m_inputXPos;
+
 	public:
-		Text(std::string name, Div* p_div, std::string p_text, int p_y, int p_x, bool hidden = false, int p_width = 0);
+		Text(std::string name, Div* div, std::string label,	int y, int x, bool hidden = false, int width = 0);
+		//Text(std::string name, Div* div, std::string label, int y, int x, int width = 0);
+		//Text(std::string name, Div* div, int y, int x, int width = 0, bool hidden = false);
+		//Text(std::string name, Div* div, int y, int x, int width = 0);
 
 		void		Draw();
 		std::string getData();

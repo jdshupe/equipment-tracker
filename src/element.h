@@ -21,6 +21,9 @@ class Element
 		Element(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden = false);
 		std::string m_headers;
 
+		int		y()					{ return m_yPos; }
+		int		x()					{ return m_xPos; }
+
 		int		height()			{ return m_height; }
 		void	height(int height)	{ m_height = height; }
 
@@ -40,6 +43,10 @@ class Element
 			std::cout << m_xPos << m_yPos << std::endl;
 			std::cout << m_name << std::endl;
 		}
+
+
+
+
 
 		virtual void Draw(){};
 
