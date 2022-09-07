@@ -86,11 +86,11 @@ std::string Selection::getData()
 			// these 2 cases handle navigating the displayed list of options
 			case KEY_UP:
 				rowUp();
-				updateOptions();
+				wrefresh(m_optionsWindow);
 				break;
 			case KEY_DOWN:
 				rowDown();
-				updateOptions();
+				wrefresh(m_optionsWindow);
 				break;
 
 			// This is the standard input handler,
@@ -150,8 +150,18 @@ void Selection::updateOptions()
 					wattron(m_optionsWindow, COLOR_PAIR(3));	
 
 				//TODO(bug) program crashes if deleting a character longer thatn the options window
-				mvwprintw(m_optionsWindow, numberOfResults, 0, "%s",
-						m_dataList[i][0].substr(0,m_width).c_str());
+				std::string printValue;
+				if (m_dataList[i][0].length() > m_width)
+				{
+					printValue = m_dataList[i][0].substr(0,m_width);
+				} else if (m_dataList[i][0].length() < m_width)
+				{
+					printValue = m_dataList[i][0].append(m_width - m_dataList[i][0].length(), ' ');
+				} else {
+					printValue = m_dataList[i][0];
+				}
+				mvwprintw(m_optionsWindow, numberOfResults, 0, "%s", printValue.c_str());
+
 				wrefresh(m_optionsWindow);
 				m_selectedOption == i + 1 ?
 					wattroff(m_optionsWindow, COLOR_PAIR(4)): 
@@ -175,17 +185,49 @@ WINDOW* Selection::createWindow()
 	return local_win;
 }
 
+/*
+ * when called, the following 2 functions increment/decrement as needed and then
+ * reprint the lines with the appropriate colors. This goes as follows:
+ * 1. reprint the currently highlighted line w/o color
+ * 2. increment the selected line number
+ * 3. reprint the new selected line w/ color
+ * 4. refresh the screen
+ */
 void Selection::rowDown()
-{ 
-	m_selectedOption == m_dataList.size() ? 
+{
+	// set font to black on white
+	wattron(m_optionsWindow, COLOR_PAIR(3));
+	// reprint old line without highlighting
+	mvwprintw(m_optionsWindow, m_selectedOption-1, 0, "%s",
+			m_displayedList[m_selectedOption-1][0].c_str());
+
+	// increment and move to start if at end
+	m_selectedOption == m_displayedList.size() ? 
 		m_selectedOption = 1 : 
 		m_selectedOption++; 
+
+	// turn on green letters
+	wattron(m_optionsWindow, COLOR_PAIR(4));
+	// reprint new line with highlighting
+	mvwprintw(m_optionsWindow, m_selectedOption-1, 0, "%s",
+			m_displayedList[m_selectedOption-1][0].c_str());
+	// set color back to default
+	wattroff(m_optionsWindow, COLOR_PAIR(4));
 }
 void Selection::rowUp()  
 { 
+	wattron(m_optionsWindow, COLOR_PAIR(3));
+	mvwprintw(m_optionsWindow, m_selectedOption-1, 0, "%s",
+			m_displayedList[m_selectedOption-1][0].c_str());
+
 	m_selectedOption == 1 ? 
 		m_selectedOption = m_dataList.size() : 
 		m_selectedOption--; 
+
+	wattron(m_optionsWindow, COLOR_PAIR(4));
+	mvwprintw(m_optionsWindow, m_selectedOption-1, 0, "%s",
+			m_displayedList[m_selectedOption-1][0].c_str());
+	wattroff(m_optionsWindow, COLOR_PAIR(4));
 }
 
 
@@ -227,4 +269,3 @@ int Selection::highlight()
 	m_textLabel->highlight();
 	return 1;
 }
-
