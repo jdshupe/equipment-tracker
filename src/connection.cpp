@@ -9,10 +9,13 @@ using namespace pqxx;
 string database::select(string p_statement, int* data_rows)
 {
 	string sql = p_statement;
+	ifstream newfile("password.txt");
+	string password;
+	getline(newfile, password);
 	try 
 	{
 		connection C("user=postgres " \
-					"password=Thisisastrongpassword " \
+					"password=" + password + " "\
 					"host=db.zhjuuyxtilgjluzixcwh.supabase.co " \
 					"port=5432 " \
 					"dbname=postgres");
@@ -42,10 +45,13 @@ string database::select(string p_statement, int* data_rows)
 string database::select(string p_statement)
 {
 	string sql = p_statement;
+	ifstream newfile("password.txt");
+	string password;
+	getline(newfile, password);
 	try 
 	{
 		connection C("user=postgres " \
-					"password=Thisisastrongpassword " \
+					"password=" + password + " "\
 					"host=db.zhjuuyxtilgjluzixcwh.supabase.co " \
 					"port=5432 " \
 					"dbname=postgres");
@@ -76,10 +82,13 @@ string database::select(string p_statement)
 void database::insert(string p_statement)
 {
 	string sql = p_statement;
+	ifstream newfile("password.txt");
+	string password;
+	getline(newfile, password);
 	try 
 	{
 		connection C("user=postgres " \
-					"password=Thisisastrongpassword " \
+					"password=" + password + " "\
 					"host=db.zhjuuyxtilgjluzixcwh.supabase.co " \
 					"port=5432 " \
 					"dbname=postgres");

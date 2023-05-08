@@ -8,3 +8,5 @@ Planned Functionality
 - [ ] update rentals
 - [ ] report on rentals
 - [ ] automatically create coins uploads
+
+testing

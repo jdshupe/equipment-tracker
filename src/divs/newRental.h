@@ -5,6 +5,7 @@
 #include "../div.h"
 #include "../elements/selection.h"
 #include "../elements/text.h"
+#include "homePage.h"
 
 class Div;
 class NewRental : public Div
@@ -14,8 +15,8 @@ class NewRental : public Div
 		void addElements();
 
 		int selectedChild = 0;
-		int oneTimeFeeRows;
-		int monthlyFeeRows;
+		int oneTimeFeeRows = 0;
+		int monthlyFeeRows = 1;
 
 	public:
 		NewRental(std::string name, int yPos, int xPos, int height, int width);
@@ -27,6 +28,8 @@ class NewRental : public Div
 
 		void nextChild();
 		void previousChild();
+
+		void submit();
 };
 
 #endif

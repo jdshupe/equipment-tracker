@@ -21,6 +21,9 @@ class Element
 		Element(std::string name, Div* div, int height, int width, int yPos, int xPos, bool hidden = false);
 		std::string m_headers;
 
+		int		y()					{ return m_yPos; }
+		int		x()					{ return m_xPos; }
+
 		int		height()			{ return m_height; }
 		void	height(int height)	{ m_height = height; }
 
@@ -41,12 +44,18 @@ class Element
 			std::cout << m_name << std::endl;
 		}
 
-		virtual void Draw(){};
+
+
+
+
+		virtual void		Draw(){};
+		virtual std::string value(){return "Not a derived Member";};
 
 		// virtual method for table derived class
 		virtual void rowDown(){};
 		virtual void rowUp(){};
 		virtual void render(){};
+		virtual void refreshData(){};
 
 		// virtual method for text derived class
 		virtual std::string getData(){return "Not a derived Member";};
@@ -54,6 +63,7 @@ class Element
 
 		// virtual method for selection derived class
 		virtual void makeSelection(){};
+		virtual void populateData(std::string hold1, int hold2){};
 };
 
 #endif

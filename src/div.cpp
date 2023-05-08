@@ -55,6 +55,7 @@ void Div::render()
 void Div::destroy_win()
 {
 	wborder(m_window, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+	werase(m_window);
 	wrefresh(m_window);
 	delwin(m_window);
 }

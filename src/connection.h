@@ -3,6 +3,7 @@
 #define CONNECTION_H
 
 #include <iostream>
+#include <fstream>
 #include <pqxx/pqxx>
 #include <string>
 

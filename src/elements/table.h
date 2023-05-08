@@ -47,6 +47,8 @@ class Table : public Element
 		// get/set for the table query
 		const std::string& query() const { return m_query; }
 		void query(const std::string query) { m_query = query; }
+
+		std::string value() { return std::string("no value"); }
 };
 
 #endif
