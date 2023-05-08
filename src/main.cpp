@@ -10,28 +10,31 @@
 using namespace std;
 
 /* declarations */
-int ch;
+int ch; // var that holds key inputs for the main loop
 
-Div* activeWindow;
+Div* activeWindow; // var that holds a pointer to window currently taking input
+HomePage* header_win; // the main screen
 
+
+/* Initialization */
 void startCurses();
 void setColors();
-void createNewRental();
 
-/* main loop */
+
+/* main function */
 int main()
 {
 	startCurses();
 
 	/* create windows */
-	HomePage header_win("Rentals", 0, 0, LINES - 3, COLS);
-	activeWindow = &header_win;
+	header_win = new HomePage("Rentals", 0, 0, LINES - 3, COLS);
+	activeWindow = header_win;
 	Div footer_win("Key Bindings", LINES - 3, 0, 3, COLS);
 
 	Text key_bind_1("KeyBinds", &footer_win, 
 			"F1:Quit  N:New Rental  F:Filter  E:Extend", 1, 2);
 
-	wrefresh(header_win.win());
+	wrefresh(header_win->win());
 	wrefresh(footer_win.win());
 	refresh();
 

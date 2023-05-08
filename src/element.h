@@ -48,12 +48,14 @@ class Element
 
 
 
-		virtual void Draw(){};
+		virtual void		Draw(){};
+		virtual std::string value(){return "Not a derived Member";};
 
 		// virtual method for table derived class
 		virtual void rowDown(){};
 		virtual void rowUp(){};
 		virtual void render(){};
+		virtual void refreshData(){};
 
 		// virtual method for text derived class
 		virtual std::string getData(){return "Not a derived Member";};

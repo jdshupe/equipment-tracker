@@ -77,7 +77,9 @@ std::string Selection::getData()
 					displayValue.append(m_width - m_value.length(), ' ');
 
 					// prints the updated value and moves the cursor one space
+					wattron(m_div->win(), COLOR_PAIR(1));
 					mvwprintw(m_div->win(), m_yPos, m_inputXPos, "%s", displayValue.c_str());
+					wattroff(m_div->win(), COLOR_PAIR(1));
 					wmove(m_div->win(), m_yPos, m_inputXPos + m_value.length());
 
 					updateOptions();
@@ -98,7 +100,9 @@ std::string Selection::getData()
 			default:
 				m_value += (ch); // add typed character to selection value
 				updateOptions();
+				wattron(m_div->win(), COLOR_PAIR(1));
 				mvwprintw(m_div->win(), m_yPos, m_inputXPos, "%s", m_value.c_str());
+				wattroff(m_div->win(), COLOR_PAIR(1));
 				break;
 		}	
 	}
@@ -107,7 +111,7 @@ std::string Selection::getData()
 	 * printing it, removing the selection window, and passing the values
 	 * associated to the rest of the form
 	 */
-	m_value = m_displayedList[m_selectedOption-1][0];
+	m_value = removeTrailingSpaces(m_displayedList[m_selectedOption-1][0]);
 
 	wclear(m_optionsWindow);
 	wrefresh(m_optionsWindow);
@@ -115,7 +119,9 @@ std::string Selection::getData()
 	curs_set(0);									// hide cursor
 
 	redrawwin(m_div->win());
+	wattron(m_div->win(), COLOR_PAIR(1));
 	mvwprintw(m_div->win(), m_yPos, m_inputXPos, "%s", m_value.c_str());
+	wattroff(m_div->win(), COLOR_PAIR(1));
 	
 	return m_value.c_str();
 }
@@ -253,6 +259,7 @@ void Selection::populateData(std::string data, int xDim)
 	}
 }
 
+
 /**
  * returns an input string in all lower case letters
  *
@@ -262,6 +269,15 @@ std::string Selection::toLowerCase(std::string string) {
 	std::transform(string.begin(), string.end(), string.begin(), ::tolower );
 	return string;
 }
+
+
+std::string Selection::removeTrailingSpaces(std::string string) {
+	const char* WhiteSpace = " \t\v\r\n";
+	std::size_t start = string.find_first_not_of(WhiteSpace);
+	std::size_t end = string.find_last_not_of(WhiteSpace);
+	return start == end ? std::string() : string.substr(start, end - start + 1);
+}
+
 
 
 int Selection::highlight()

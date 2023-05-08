@@ -1,5 +1,8 @@
 src/*.o
 src/divs/*.o
 src/elements/*.o
+password.txt
+pat
 equipmentTracker
 log.txt
+lib/*

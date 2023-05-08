@@ -27,6 +27,8 @@ class Text : public Element
 		
 		int lastCol() { return m_width + m_xPos; }
 
+		std::string value() { return m_value; }
+
 };
 
 #endif

@@ -5,6 +5,7 @@
 #include "../div.h"
 #include "../elements/selection.h"
 #include "../elements/text.h"
+#include "homePage.h"
 
 class Div;
 class NewRental : public Div
@@ -27,6 +28,8 @@ class NewRental : public Div
 
 		void nextChild();
 		void previousChild();
+
+		void submit();
 };
 
 #endif

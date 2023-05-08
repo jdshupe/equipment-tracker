@@ -4,6 +4,7 @@
 #include "../div.h"
 #include "../elements/table.h"
 #include "newRental.h"
+#include "poWindow.h"
 
 class Div;
 class HomePage : public Div

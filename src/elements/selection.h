@@ -49,10 +49,13 @@ class Selection : public Element
 		void query(const std::string query) { m_query = query; }
 
 		std::string toLowerCase(std::string string);
+		std::string removeTrailingSpaces(std::string string);
 
 		void Draw();
 
 		int highlight();
+
+		std::string value() { return m_value; }
 };
 
 
